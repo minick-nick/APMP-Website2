@@ -10,3 +10,4 @@ For querying content of table
 [table_name].query.all()
 
 [table_name].query.filter_by([key])
+htis
