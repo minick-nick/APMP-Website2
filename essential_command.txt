@@ -1,0 +1,12 @@
+For creating db
+app.app_context().push()
+db.create_all()
+
+For adding content to the table
+db.session.add([content to add])
+db.session.commit()
+
+For querying content of table
+[table_name].query.all()
+
+[table_name].query.filter_by([key])

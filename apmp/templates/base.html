@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{% block title %} {% endblock %}</title>
+    
+    <link rel="icon" href="{{ url_for('static', filename='images/tab-logo.png') }}"
+
+    <!-- Bootstrap CDN link -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+
+    <!-- Roboto font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/general.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg position-fixed top-0 start-0 end-0" style="background-color: #dadada">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('about') }}">
+          <img
+            src="{{ url_for('static', filename='images/logo.png') }}"
+            alt="Logo"
+            width="90"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                aria-current="page"
+                href="{{ url_for('home') }}"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('about') }}">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('products')}}">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('services')}}">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('events')}}">Events</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('contact_us')}}"
+                >Contact Us</a
+              >
+            </li>
+          </ul>
+          <a href="{{ url_for('login') }}" class="btn btn-outline-success"
+            >Log in</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container" style="height: 2000px;">
+      {% block content %} {% endblock %}
+    </main>
+
+    {% block footer %}
+    {% endblock %}
+
+    <footer class="container-fluid" style="border: 1px solid black;">
+      <div class="container footer">
+          <div class="row gy-3">
+            <div class="col col-12 col-sm-12 col-md-5">
+              <h4>Get in touch with us</h4>
+              <div class="address-and-number">
+                <div>
+                  <a href="">
+                  <img src="{{ url_for('static', filename='images/icon/location.png') }}" alt="Location icon">San Eugenio, Aringay, La Union
+                  </a>
+                </div>
+                <div>
+                  <img src="{{ url_for('static', filename='images/icon/phone.png') }}" alt="Phone icon">Mobile Numbers: 0938.7387 | 0948.11.698 | 0916.708.1070
+                </div>
+              </div>
+              <div class="contact-platform">
+                <a href=""><img src="{{ url_for('static', filename='images/icon/facebook.png')}}" alt="Facebook logo"></a>
+                <a href=""><img src="{{ url_for('static', filename='images/icon/gmail.png')}}" alt="Gmail logo"></a>
+                <a href=""><img src="{{ url_for('static', filename='images/icon/yahoo.png')}}" alt="Yahoo logo"></a>
+              </div>
+            </div>
+            <div class="col col-12 col-sm-12 col-md-7">
+              <div class="container message p-4">
+                {% block message_form %}
+                {% endblock %}
+              </div>
+            </div>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- JQuery CDN link -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.slim.js"
+      integrity="sha256-DKU1CmJ8kBuEwumaLuh9Tl/6ZB6jzGOBV/5YpNE2BWc="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Bootstrap CDN link -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+
+</html>

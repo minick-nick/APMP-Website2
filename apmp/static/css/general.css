@@ -1,0 +1,104 @@
+body {
+    font-family: 'Roboto';
+}
+
+.navbar .nav-item {
+    margin-left: 20px;
+}
+
+.navbar .nav-item .nav-link {
+    padding: 5px 0;
+    position: relative;
+}
+
+.navbar .btn {
+    margin-left: 20px;
+}
+
+.navbar .nav-item .nav-link::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: green;
+    transition: all 0.3s ease;
+    transform: scale(0);
+}
+
+.navbar .nav-item .nav-link.active::before,
+.navbar .nav-item .nav-link:hover::before{
+    transform: scale(1);
+}
+
+main {
+    height: 2000px;
+    margin-top: 72px;
+    border: 1px solid black;
+}
+
+footer {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: rgba(7, 7, 7, 0.75);
+}
+
+.box {
+    border: 1px solid black;
+}
+
+.footer .row .col {
+    padding: 0;
+}
+
+.footer .address-and-number, .footer h4, .footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer .address-and-number {
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.footer .address-and-number img {
+    width: 27px;
+    height: 27px;
+    margin-right: 8px;
+}
+
+.footer .address-and-number div {
+    margin-top: 10px;
+}
+
+.footer .contact-platform img {
+    width: 30px;
+    height: 30px;
+    margin-right: 7px;
+}
+
+.footer .contact-platform {
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.message {
+    background-color:  rgba(40, 39, 39, 0.429);
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.message h4 {
+    margin-bottom: 20px
+}
+
+.message div {
+    margin-bottom: 7px;
+}
+
+.rw-conversation-container .rw-header {
+    background-color: aqua;
+}
+
+

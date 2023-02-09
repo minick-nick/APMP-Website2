@@ -1,0 +1,28 @@
+body {
+    font-family: 'Roboto';
+    background-color: #DADADA;
+}
+
+.apostle-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+.login-container {
+    height: 100vh;
+}
+
+.login-card {
+    width: 380px;
+    min-width: 269px;
+}
+
+.logo-container {
+    height: 145px;
+}
+
+.login-card a {
+    text-decoration: none;
+    color: #C90185;
+}
