@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
@@ -7,26 +8,7 @@ app.config['SECRET_KEY'] = 'sdfsdfsdfsdfsdfsdfsdfsd' # This secre key should be 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///apmp.db'
 
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
 from apmp import routes
-
-from apmp.models import Client
-
-
-c = Client()
-
-c.f_name = 'sdfsdf'
-c.m_name = 'sdfsdf'
-c.l_name = 'sfsdfsfsdf'
-c.number = '101204'
-c.email = 'ssdfsdfsdfs'
-
-
-app.app_context().push()
-
-db.create_all()
-
-db.session.add(c)
-db.session.commit()
-
 
