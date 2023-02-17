@@ -7,7 +7,7 @@
 
     <title>{% block title %} {% endblock %}</title>
     
-    <link rel="icon" href="{{ url_for('static', filename='images/tab-logo.png') }}"
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.svg') }}"
 
     <!-- Bootstrap CDN link -->
     <link
@@ -81,16 +81,16 @@
                 >Contact Us</a
               >
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Log In
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ url_for('login_client') }}">Client</a></li>
-                <!-- <li><hr class="dropdown-divider"></li> -->
-                <li><a class="dropdown-item" href="{{ url_for('login_admin') }}">Admin</a></li>
-              </ul>
-            </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Log In
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{ url_for('login_client') }}">Client</a></li>
+                  <!-- <li><hr class="dropdown-divider"></li> -->
+                  <li><a class="dropdown-item" href="{{ url_for('login_admin') }}">Admin</a></li>
+                </ul>
+              </li>
           </ul>
         </div>
       </div>
@@ -124,7 +124,20 @@
                 <a href=""><img src="{{ url_for('static', filename='images/icon/yahoo.png')}}" alt="Yahoo logo"></a>
               </div>
             </div>
-            <div class="col col-12 col-sm-12 col-md-7">
+            <div id="msg_form" class="col col-12 col-sm-12 col-md-7">
+   
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                      <div class="alert alert-{{category}} alert-dismissible fade show mb-1" role="alert">
+                          {{ message }}
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                  {% endfor %}
+                  <div class="mb-2"></div>
+                {% endif %}
+              {% endwith %}
+       
               <div class="container message p-4">
                 {% block message_form %}
                 {% endblock %}

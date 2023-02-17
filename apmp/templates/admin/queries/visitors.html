@@ -1,0 +1,85 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+
+<div class="row mb-4">
+  <div class="d-flex flex-row">
+    <div>
+      <input type="date" class="form-control">
+    </div>
+    <div class="ms-auto">
+      <div class="input-group" style="width:300px">
+        <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+          <span class="input-group-text" style="height: 38px;"  id="search">
+            <i class="ti-search"></i>
+          </span>
+        </div>
+        <input type="text" class="form-control" style="height: 41.8px;" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">VISITORS QUERIES</h4>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            </thead>
+              <tbody>
+              {% for visitor_msg in visitors_msgs %}
+                <tr>
+                  <td class="py-1">
+                    {{ visitor_msg.message_id }}
+                  </td>
+                  <td>
+                    <div class="d-flex flex-column">
+                      <h4>
+                        {{ visitor_msg.name }}
+                      </h4>
+                      <a href="">{{ visitor_msg.email }}</a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex flex-row justify-content-end align-items-center">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-dark btn-icon-text me-4" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ visitor_msg.message_id }}">
+                      See message
+                      <i class="ti-comment btn-icon-append"></i>  
+                    </button>
+                    {{ visitor_msg.date_received }}
+                    </div>
+                  </td>
+                </tr>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal-{{ visitor_msg.message_id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Message</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        {{  visitor_msg.message }}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Reply via email</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
