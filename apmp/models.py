@@ -80,9 +80,21 @@ class Lot(db.Model):
     lawn_number = db.Column(db.Integer, nullable=False)
     phase_number = db.Column(db.Integer)
     status = db.Column(db.String(length=30))
-    lot_type = db.Column(db.String(length=30))
-    lot_price = db.Column(db.Integer)
     owner_id = db.Column(db.Integer, db.ForeignKey('client.client_id'))
+
+class PurchaseDetail():
+    purchase_detail_id = db.Column(db.Integer, primary_key=True)
+    lot_type = db.Column(db.String, nullable=False)
+    lot_price = db.Column(db.Float, nullable=False)
+    purchase_type = db.Column(db.String, nullable=False) # if monthly amortization or installment
+    lot_purchase_price = db.Column(db.String, nullable=False)
+
+class MonthlyAmortization():
+    monthly_amortization_id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String, nullable=False)
+    down_payment_type = db.Column(db.String, nullable=False)
+    payment_schedule = db.Column(db.String, nullable=False)
+    balance = db.Column(db.String, nullable=False)
 
 class VisitorMessage(db.Model):
     message_id = db.Column(db.Integer, primary_key=True)
@@ -98,15 +110,18 @@ class LotPromo(db.Model):
     lot_promo_id =  db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String)
     label = db.Column(db.String)
-    is_spot_cash = db.Column(db.String)
-    num_of_mos_to_pay = db.Column(db.String)
-    list_price = db.Column(db.String)
-    disc_per = db.Column(db.String)
-    disc_value = db.Column(db.String)
-    perp_care_fund_per = db.Column(db.String)
-    perp_care_value = db.Column(db.String)
-    vat_per = db.Column(db.String)
-    vat_val = db.Column(db.String)
-    monthly_pay = db.Column(db.String)
-    total = db.Column(db.String)
-    
+    is_spot_cash = db.Column(db.Boolean)
+    num_of_mos_to_pay = db.Column(db.Integer)
+    list_price = db.Column(db.Float)
+    disc_per = db.Column(db.Integer)
+    disc_value = db.Column(db.Float)
+    perp_care_fund_per = db.Column(db.Integer)
+    perp_care_value = db.Column(db.Float)
+    vat_per = db.Column(db.Integer)
+    vat_val = db.Column(db.Float)
+    monthly_pay = db.Column(db.Integer)
+    total = db.Column(db.Float)
+
+class NewsContent(db.Model):
+    id =  db.Column(db.Integer, primary_key=True)
+    md_code = db.Column(db.Text)

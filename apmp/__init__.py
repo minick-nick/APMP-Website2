@@ -19,8 +19,7 @@ def db_c(flag):
     
     if flag == 'c':
         db.create_all()
-        from apmp.models import Admin
-        from apmp.models import LotPromo
+        from apmp.models import Admin, LotPromo, NewsContent
         from apmp import LOT
 
         a = Admin()
@@ -51,7 +50,13 @@ def db_c(flag):
             db.session.add(p)
             db.session.commit()
 
-        print('db created')
+        news_content = NewsContent()
+        news_content.md_code = LOT.NEWS
+        
+        db.session.add(news_content)
+        db.session.commit()
+
+        print('db created and initialized')
 
     elif flag == 'd':
         db.drop_all()

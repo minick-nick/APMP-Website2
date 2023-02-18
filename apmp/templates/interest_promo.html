@@ -1,57 +1,304 @@
 {% extends 'base.html' %}
 {% block title %} Products {% endblock %}
 {% block content %}
-<div class="container">
-  <h1>DOWNPAYMENT AND INTEREST PROMO</h1>
-
-  <div class="card">
-    <div class="card-header">
-      Featured
-    </div>
+  <div class="container pt-3 pb-5">
+    <div class="container">
+      <h2 class="mt-3">DOWNPAYMENT AND INTEREST PROMO</h2>
+    
+      <div class="card mt-5">
+        <div class="card-header" style="background-color: #546B62">
+          <h4 class="text-center" style="color: white;">STANDARD</h4>
+        </div>
       <div class="card-body">
-      {% for PROMO in PROMOS %}
-      <H1>{{ PROMO.TYPE }}</H1>
-        {% set TYPE = PROMO.TYPES %}
+        <div class="row">
+          {% for p in PROMOS %}
+          {% set ID = p.lot_promo_id %}
+          {% set TYPE = p.type %}
+          {% set IS_SPOT_CASH = p.is_spot_cash %}
+          {% if TYPE == "STANDARD" %}
+          {% if IS_SPOT_CASH %}
+            <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+              <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+                <thead>
+                  <tr>
+                    <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                      <div class="text-center">{{p.label}}</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td scope="row">List Price</td>
+                    <td>{{p.list_price}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Discount ({{p.disc_per}}%)</td>
+                    <td>{{p.disc_value}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                    <td>{{p.perp_care_value}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">VAT ({{p.vat_per}}%)</td>
+                    <td>{{p.vat_val}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Total</td>
+                    <td>{{p.total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+              {% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% for p in PROMOS %}
+        {% set ID = p.lot_promo_id %}
+        {% set TYPE = p.type %}
+        {% set IS_SPOT_CASH = p.is_spot_cash %}
         {% if TYPE == "STANDARD" %}
-        <div class="d-flex flex-row">
-          <table class="table table-bordered m-2" style="border: 1px solid rgba(34, 33, 33, 0.663);">
-            <thead>
-              <tr>
-                <th colspan="2" scope="col">First</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-    
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-    
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>@twitter</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-    
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </table>
+          {% if not IS_SPOT_CASH %}
+          <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+            <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+              <thead>
+                <tr>
+                  <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                    <div class="text-center">{{p.label}}</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row">List Price</td>
+                  <td>{{p.list_price}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                  <td>{{p.perp_care_value}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">VAT ({{p.vat_per}}%)</td>
+                  <td>{{p.vat_val}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">Total</td>
+                  <td>{{p.total}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">Monthly Payment ({{p.num_of_mos_to_pay}} mos)</td>
+                  <td>{{p.monthly_pay}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+            {% endif %}
         {% endif %}
       {% endfor %}
+        
+      
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
+      <div class="card mt-5">
+        <div class="card-header" style="background-color: #546B62">
+          <h4 class="text-center" style="color: white;">PREMIUM</h4>
+        </div>
+      <div class="card-body">
+        <div class="row">
+          {% for p in PROMOS %}
+          {% set ID = p.lot_promo_id %}
+          {% set TYPE = p.type %}
+          {% set IS_SPOT_CASH = p.is_spot_cash %}
+          {% if TYPE == "PREMIUM" %}
+          {% if IS_SPOT_CASH %}
+            <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+              <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+                <thead>
+                  <tr>
+                    <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                      <div class="text-center">{{p.label}}</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td scope="row">List Price</td>
+                    <td>{{p.list_price}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Discount ({{p.disc_per}}%)</td>
+                    <td>{{p.disc_value}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                    <td>{{p.perp_care_value}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">VAT ({{p.vat_per}}%)</td>
+                    <td>{{p.vat_val}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Total</td>
+                    <td>{{p.total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+              {% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% for p in PROMOS %}
+        {% set ID = p.lot_promo_id %}
+        {% set TYPE = p.type %}
+        {% set IS_SPOT_CASH = p.is_spot_cash %}
+        {% if TYPE == "PREMIUM" %}
+          {% if not IS_SPOT_CASH %}
+          <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+            <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+              <thead>
+                <tr>
+                  <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                    <div class="text-center">{{p.label}}</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row">List Price</td>
+                  <td>{{p.list_price}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                  <td>{{p.perp_care_value}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">VAT ({{p.vat_per}}%)</td>
+                  <td>{{p.vat_val}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">Total</td>
+                  <td>{{p.total}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">Monthly Payment ({{p.num_of_mos_to_pay}} mos)</td>
+                  <td>{{p.monthly_pay}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+        
+      
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-5">
+        <div class="card-header" style="background-color: #546B62">
+          <h4 class="text-center" style="color: white;">SUPER PREMIUM</h4>
+        </div>
+      <div class="card-body">
+        <div class="row">
+          {% for p in PROMOS %}
+          {% set ID = p.lot_promo_id %}
+          {% set TYPE = p.type %}
+          {% set IS_SPOT_CASH = p.is_spot_cash %}
+          {% if TYPE == "SUPER PREMIUM" %}
+          {% if IS_SPOT_CASH %}
+            <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+              <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+                <thead>
+                  <tr>
+                    <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                      <div class="text-center">{{p.label}}</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td scope="row">List Price</td>
+                    <td>{{p.list_price}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Discount ({{p.disc_per}}%)</td>
+                    <td>{{p.disc_value}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                    <td>{{p.perp_care_value}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">VAT ({{p.vat_per}}%)</td>
+                    <td>{{p.vat_val}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Total</td>
+                    <td>{{p.total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+              {% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% for p in PROMOS %}
+        {% set ID = p.lot_promo_id %}
+        {% set TYPE = p.type %}
+        {% set IS_SPOT_CASH = p.is_spot_cash %}
+        {% if TYPE == "SUPER PREMIUM" %}
+          {% if not IS_SPOT_CASH %}
+          <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+            <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+              <thead>
+                <tr>
+                  <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                    <div class="text-center">{{p.label}}</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row">List Price</td>
+                  <td>{{p.list_price}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                  <td>{{p.perp_care_value}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">VAT ({{p.vat_per}}%)</td>
+                  <td>{{p.vat_val}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">Total</td>
+                  <td>{{p.total}}</td>
+                </tr>
+                <tr>
+                  <td scope="row">Monthly Payment ({{p.num_of_mos_to_pay}} mos)</td>
+                  <td>{{p.monthly_pay}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+        
+      
+          </div>
+        </div>
+      </div>
+  </div>
 {% endblock %}
 
 {% block message_form %}

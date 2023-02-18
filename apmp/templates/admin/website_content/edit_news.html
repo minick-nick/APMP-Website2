@@ -1,0 +1,23 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+  <div class="row">
+    <div class="container">
+      <div class="row">
+        <div class="col-5">
+              <form method="POST">
+                {{ news_content_form.hidden_tag() }}
+                {{ news_content_form.md_code(class="form-control", rows="3", style="height: 78vh")}}
+                <div class="d-flex justify-content-end mt-2">
+                  {{ news_content_form.save(class="btn btn-success")}}
+                </div>
+              </form>
+        </div>
+        <div class="col-7">
+          <div class="overflow-scroll" style="height: 85vh;">
+            <div class="container" style="width: 100vw; height: 100vh">
+              {{news|safe}}
+            </div>
+          </div>    
+        </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,627 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="container">
+  <div class="container">
+    <div class="card mt-3">
+      <div class="card-header" style="background-color: #546B62">
+        <h4 class="text-center" style="color: white;">STANDARD</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="row">
+            {% for p in PROMOS %}
+              {% set ID = p.lot_promo_id %}
+              {% set TYPE = p.type %}
+              {% set IS_SPOT_CASH = p.is_spot_cash %}
+              {% if TYPE == "STANDARD" %}
+                {% if IS_SPOT_CASH %}
+                  <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+                    <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+                      <thead>
+                        <tr>
+                          <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                            <div class="text-center">{{p.label}}</div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td scope="row">List Price</td>
+                          <td>{{p.list_price}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">Discount ({{p.disc_per}}%)</td>
+                          <td>{{p.disc_value}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                          <td>{{p.perp_care_value}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">VAT ({{p.vat_per}}%)</td>
+                          <td>{{p.vat_val}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">Total</td>
+                          <td>{{p.total}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Modal -->
+                <div class="modal fade" id="exampleModal-{{ID}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{TYPE}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form method="POST" class="form">
+                      <div class="modal-body">
+                          {{ lot_promo_form.hidden_tag() }}
+
+                          <input id="edit_promo" name="edit_promo" type="hidden" value="{{ID}}">
+                          <table class="table table-bordered border-secondary table-hover">
+                          <thead>
+                            <tr>
+                              <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                                <div class="text-center"> {{ lot_promo_form.label(style="width: 400px") }} </div>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td scope="row">List Price</td>
+                              <td>{{lot_promo_form.list_price}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Discount ({{lot_promo_form.disc_per(style="width: 70px")}}%)</td>
+                              <td>{{lot_promo_form.disc_value}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Perpetual Care Fund ({{lot_promo_form.perp_care_fund_per(style="width: 70px")}}%)</td>
+                              <td>{{lot_promo_form.perp_care_value}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row"> VAT ({{lot_promo_form.vat_per(style="width: 70px")}}%)</td>
+                              <td>{{lot_promo_form.vat_val}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Total</td>
+                              <td>{{lot_promo_form.total}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          {{lot_promo_form.submit(class="btn btn-success")}}
+                        </div>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+
+                  {% endif %}
+              {% endif %}
+            {% endfor %}
+          
+            {% for p in PROMOS %}
+            {% set ID = p.lot_promo_id %}
+            {% set TYPE = p.type %}
+            {% set IS_SPOT_CASH = p.is_spot_cash %}
+            {% if TYPE == "STANDARD" %}
+              {% if not IS_SPOT_CASH %}
+              <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+                <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+                  <thead>
+                    <tr>
+                      <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                        <div class="text-center">{{p.label}}</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">List Price</td>
+                      <td>{{p.list_price}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                      <td>{{p.perp_care_value}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">VAT ({{p.vat_per}}%)</td>
+                      <td>{{p.vat_val}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Total</td>
+                      <td>{{p.total}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Monthly Payment ({{p.num_of_mos_to_pay}} mos)</td>
+                      <td>{{p.monthly_pay}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+                <!-- Modal -->
+              <div class="modal fade" id="exampleModal-{{ID}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">{{TYPE}}</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" class="form">
+                    <div class="modal-body">
+                        {{ lot_promo_form.hidden_tag() }}
+
+                        <input id="edit_promo" name="edit_promo" type="hidden" value="{{ID}}">
+                        <table class="table table-bordered border-secondary table-hover">
+                        <thead>
+                          <tr>
+                            <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                              <div class="text-center"> {{ lot_promo_form.label(style="width: 400px") }} </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td scope="row">List Price</td>
+                            <td>{{lot_promo_form.list_price}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Perpetual Care Fund ({{lot_promo_form.perp_care_fund_per(style="width: 70px")}}%)</td>
+                            <td>{{lot_promo_form.perp_care_value}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row"> VAT ({{lot_promo_form.vat_per(style="width: 70px")}}%)</td>
+                            <td>{{lot_promo_form.vat_val}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Total</td>
+                            <td>{{lot_promo_form.total}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Monthly Payment ({{lot_promo_form.num_of_mos_to_pay(style="width: 70px")}} mos)</td>
+                            <td>{{lot_promo_form.monthly_pay}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {{lot_promo_form.submit(class="btn btn-success")}}
+                      </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+                {% endif %}
+            {% endif %}
+          {% endfor %}
+            
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-header" style="background-color: #546B62">
+        <h4 class="text-center" style="color: white;">PREMIUM</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="row">
+            {% for p in PROMOS %}
+              {% set ID = p.lot_promo_id %}
+              {% set TYPE = p.type %}
+              {% set IS_SPOT_CASH = p.is_spot_cash %}
+              {% if TYPE == "PREMIUM" %}
+                {% if IS_SPOT_CASH %}
+                  <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+                    <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+                      <thead>
+                        <tr>
+                          <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                            <div class="text-center">{{p.label}}</div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td scope="row">List Price</td>
+                          <td>{{p.list_price}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">Discount ({{p.disc_per}}%)</td>
+                          <td>{{p.disc_value}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                          <td>{{p.perp_care_value}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">VAT ({{p.vat_per}}%)</td>
+                          <td>{{p.vat_val}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">Total</td>
+                          <td>{{p.total}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Modal -->
+                <div class="modal fade" id="exampleModal-{{ID}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{TYPE}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form method="POST" class="form">
+                      <div class="modal-body">
+                          {{ lot_promo_form.hidden_tag() }}
+
+                          <input id="edit_promo" name="edit_promo" type="hidden" value="{{ID}}">
+                          <table class="table table-bordered border-secondary table-hover">
+                          <thead>
+                            <tr>
+                              <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                                <div class="text-center"> {{ lot_promo_form.label(style="width: 400px") }} </div>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td scope="row">List Price</td>
+                              <td>{{lot_promo_form.list_price}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Discount ({{lot_promo_form.disc_per(style="width: 70px")}}%)</td>
+                              <td>{{lot_promo_form.disc_value}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Perpetual Care Fund ({{lot_promo_form.perp_care_fund_per(style="width: 70px")}}%)</td>
+                              <td>{{lot_promo_form.perp_care_value}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row"> VAT ({{lot_promo_form.vat_per(style="width: 70px")}}%)</td>
+                              <td>{{lot_promo_form.vat_val}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Total</td>
+                              <td>{{lot_promo_form.total}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          {{lot_promo_form.submit(class="btn btn-success")}}
+                        </div>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+
+                  {% endif %}
+              {% endif %}
+            {% endfor %}
+          
+            {% for p in PROMOS %}
+            {% set ID = p.lot_promo_id %}
+            {% set TYPE = p.type %}
+            {% set IS_SPOT_CASH = p.is_spot_cash %}
+            {% if TYPE == "PREMIUM" %}
+              {% if not IS_SPOT_CASH %}
+              <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+                <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+                  <thead>
+                    <tr>
+                      <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                        <div class="text-center">{{p.label}}</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">List Price</td>
+                      <td>{{p.list_price}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                      <td>{{p.perp_care_value}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">VAT ({{p.vat_per}}%)</td>
+                      <td>{{p.vat_val}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Total</td>
+                      <td>{{p.total}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Monthly Payment ({{p.num_of_mos_to_pay}} mos)</td>
+                      <td>{{p.monthly_pay}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+                <!-- Modal -->
+              <div class="modal fade" id="exampleModal-{{ID}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">{{TYPE}}</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" class="form">
+                    <div class="modal-body">
+                        {{ lot_promo_form.hidden_tag() }}
+
+                        <input id="edit_promo" name="edit_promo" type="hidden" value="{{ID}}">
+                        <table class="table table-bordered border-secondary table-hover">
+                        <thead>
+                          <tr>
+                            <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                              <div class="text-center"> {{ lot_promo_form.label(style="width: 400px") }} </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td scope="row">List Price</td>
+                            <td>{{lot_promo_form.list_price}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Perpetual Care Fund ({{lot_promo_form.perp_care_fund_per(style="width: 70px")}}%)</td>
+                            <td>{{lot_promo_form.perp_care_value}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row"> VAT ({{lot_promo_form.vat_per(style="width: 70px")}}%)</td>
+                            <td>{{lot_promo_form.vat_val}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Total</td>
+                            <td>{{lot_promo_form.total}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Monthly Payment ({{lot_promo_form.num_of_mos_to_pay(style="width: 70px")}} mos)</td>
+                            <td>{{lot_promo_form.monthly_pay}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {{lot_promo_form.submit(class="btn btn-success")}}
+                      </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+                {% endif %}
+            {% endif %}
+          {% endfor %}
+            
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-header" style="background-color: #546B62">
+        <h4 class="text-center" style="color: white;">SUPER PREMIUM</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="row">
+            {% for p in PROMOS %}
+              {% set ID = p.lot_promo_id %}
+              {% set TYPE = p.type %}
+              {% set IS_SPOT_CASH = p.is_spot_cash %}
+              {% if TYPE == "SUPER PREMIUM" %}
+                {% if IS_SPOT_CASH %}
+                  <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+                    <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+                      <thead>
+                        <tr>
+                          <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                            <div class="text-center">{{p.label}}</div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td scope="row">List Price</td>
+                          <td>{{p.list_price}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">Discount ({{p.disc_per}}%)</td>
+                          <td>{{p.disc_value}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                          <td>{{p.perp_care_value}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">VAT ({{p.vat_per}}%)</td>
+                          <td>{{p.vat_val}}</td>
+                        </tr>
+                        <tr>
+                          <td scope="row">Total</td>
+                          <td>{{p.total}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Modal -->
+                <div class="modal fade" id="exampleModal-{{ID}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{TYPE}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form method="POST" class="form">
+                      <div class="modal-body">
+                          {{ lot_promo_form.hidden_tag() }}
+
+                          <input id="edit_promo" name="edit_promo" type="hidden" value="{{ID}}">
+                          <table class="table table-bordered border-secondary table-hover">
+                          <thead>
+                            <tr>
+                              <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                                <div class="text-center"> {{ lot_promo_form.label(style="width: 400px") }} </div>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td scope="row">List Price</td>
+                              <td>{{lot_promo_form.list_price}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Discount ({{lot_promo_form.disc_per(style="width: 70px")}}%)</td>
+                              <td>{{lot_promo_form.disc_value}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Perpetual Care Fund ({{lot_promo_form.perp_care_fund_per(style="width: 70px")}}%)</td>
+                              <td>{{lot_promo_form.perp_care_value}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row"> VAT ({{lot_promo_form.vat_per(style="width: 70px")}}%)</td>
+                              <td>{{lot_promo_form.vat_val}}</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Total</td>
+                              <td>{{lot_promo_form.total}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          {{lot_promo_form.submit(class="btn btn-success")}}
+                        </div>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+
+                  {% endif %}
+              {% endif %}
+            {% endfor %}
+          
+            {% for p in PROMOS %}
+            {% set ID = p.lot_promo_id %}
+            {% set TYPE = p.type %}
+            {% set IS_SPOT_CASH = p.is_spot_cash %}
+            {% if TYPE == "SUPER PREMIUM" %}
+              {% if not IS_SPOT_CASH %}
+              <div class="col-12 col-sm-6 col-md-3" style="font-size: 15px;">
+                <table class="table table-bordered border-secondary table-hover" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ID}}">
+                  <thead>
+                    <tr>
+                      <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                        <div class="text-center">{{p.label}}</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">List Price</td>
+                      <td>{{p.list_price}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Perpetual Care Fund ({{p.perp_care_fund_per}}%)</td>
+                      <td>{{p.perp_care_value}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">VAT ({{p.vat_per}}%)</td>
+                      <td>{{p.vat_val}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Total</td>
+                      <td>{{p.total}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Monthly Payment ({{p.num_of_mos_to_pay}} mos)</td>
+                      <td>{{p.monthly_pay}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+                <!-- Modal -->
+              <div class="modal fade" id="exampleModal-{{ID}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">{{TYPE}}</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" class="form">
+                    <div class="modal-body">
+                        {{ lot_promo_form.hidden_tag() }}
+
+                        <input id="edit_promo" name="edit_promo" type="hidden" value="{{ID}}">
+                        <table class="table table-bordered border-secondary table-hover">
+                        <thead>
+                          <tr>
+                            <th colspan="2" scope="col" style="color: white; background-color: #546b62e3;">
+                              <div class="text-center"> {{ lot_promo_form.label(style="width: 400px") }} </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td scope="row">List Price</td>
+                            <td>{{lot_promo_form.list_price}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Perpetual Care Fund ({{lot_promo_form.perp_care_fund_per(style="width: 70px")}}%)</td>
+                            <td>{{lot_promo_form.perp_care_value}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row"> VAT ({{lot_promo_form.vat_per(style="width: 70px")}}%)</td>
+                            <td>{{lot_promo_form.vat_val}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Total</td>
+                            <td>{{lot_promo_form.total}}</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">Monthly Payment ({{lot_promo_form.num_of_mos_to_pay(style="width: 70px")}} mos)</td>
+                            <td>{{lot_promo_form.monthly_pay}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {{lot_promo_form.submit(class="btn btn-success")}}
+                      </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+                {% endif %}
+            {% endif %}
+          {% endfor %}
+            
+        </div>
+      </div>
+      
+    </div>
+  </div>    
+</div>
+{% endblock %}

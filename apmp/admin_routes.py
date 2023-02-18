@@ -1,11 +1,12 @@
 from apmp import app, db
 from apmp import CLIENT_ID_START
-from apmp.models import Client, Admin, Lot, VisitorMessage, login_manager
+from apmp.models import Client, Admin, Lot, VisitorMessage, LotPromo, NewsContent, login_manager
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required
-from apmp.forms import LoginFormClient, LoginFormAdmin, AddClientForm, MessageForm
+from apmp.forms import LoginFormClient, LoginFormAdmin, AddClientForm, MessageForm, LotPromoForm, LotPromoForm, NewsContentForm
 from apmp.db_helper import push_visitor_message
-
+from markdown import markdown
+from apmp.util import modify_html_code
 
 
 @app.route('/login_admin', methods=['GET', 'POST'])
@@ -60,12 +61,6 @@ def lot_image_request():
 def map():
     return render_template('admin/map.html')
 
-@app.route('/admin/edit_website_content/interest_promo')
-@login_required
-def interest_promo():
-    return render_template('admin/website_content/interest_promo.html')
-
-
 @app.route('/admin/add_client', methods=['GET', 'POST'])
 @login_required
 def add_client():
@@ -111,7 +106,55 @@ def add_client():
 
     return render_template('admin/forms/add_client_form.html', add_client_form=add_client_form)
 
-@app.route('/admin/edit_website_content')
+@app.route('/admin/edit_website_content/interest_promo', methods=['POST', 'GET'])
 @login_required
-def edit_wesite_content():
-    pass
+def edit_interest_promo():
+    PROMOS = LotPromo.query.order_by(LotPromo.lot_promo_id)
+    lot_promo_form = LotPromoForm()
+
+    if request.method == 'POST':
+        if lot_promo_form.validate_on_submit:
+
+            edit_promo = request.form.get('edit_promo')
+            promo = LotPromo.query.filter_by(lot_promo_id=edit_promo).first()
+
+            if promo:
+                promo.label = lot_promo_form.label.data
+                promo.num_of_mos_to_pay = lot_promo_form.num_of_mos_to_pay.data
+                promo.list_price = lot_promo_form.list_price.data
+                promo.disc_price = lot_promo_form.disc_per.data
+                promo.disc_value = lot_promo_form.disc_value.data
+                promo.perp_care_fund_per = lot_promo_form.perp_care_fund_per.data
+                promo.perp_care_value = lot_promo_form.perp_care_value.data
+                promo.vat_per = lot_promo_form.vat_per.data
+                promo.vat_val = lot_promo_form.vat_val.data
+                promo.total = lot_promo_form.total.data
+                promo.monthly_pay = lot_promo_form.monthly_pay.data
+                
+                db.session.commit()
+
+                return redirect(url_for('edit_interest_promo'))
+
+    return render_template('admin/website_content/edit_interest_promo.html', PROMOS=PROMOS, 
+    lot_promo_form=lot_promo_form)
+
+
+@app.route('/admin/edit_website_content/edit_news', methods=['POST', 'GET'])
+@login_required
+def edit_news():
+    current_md_code =  NewsContent.query.filter_by(id=1).first()
+    news_content_form = NewsContentForm()
+
+
+    if request.method == 'POST':
+        if news_content_form.validate_on_submit:
+            current_md_code.md_code = news_content_form.md_code.data
+            db.session.commit()
+            return redirect('edit_news')
+    
+    news_content_form.md_code.data = current_md_code.md_code
+    html_code = markdown(current_md_code.md_code)
+    news = modify_html_code(html_code)
+
+    return render_template('admin/website_content/edit_news.html', news=news, news_content_form=news_content_form)
+    

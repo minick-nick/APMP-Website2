@@ -1,5 +1,5 @@
-from apmp import db
-from apmp.models import VisitorMessage
+from apmp import db, app
+from apmp.models import VisitorMessage, NewsContent
 from flask import flash
 
 def push_visitor_message(msg_form):
@@ -16,4 +16,3 @@ def push_visitor_message(msg_form):
         flash(f'Message sent', category='success')
     except:
         flash(f'Message is not sent. Please try again later.')
-
