@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TelField, EmailField, TextAreaField, IntegerField, DateField, SelectField, FloatField, HiddenField
-from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
-from apmp.models import Client, Lot
-
-from apmp import LOT
+from wtforms import StringField, PasswordField, SubmitField, TelField, EmailField, TextAreaField, IntegerField, DateField, SelectField, FloatField, SearchField
+from wtforms.validators import Email, DataRequired, ValidationError
+from apmp.models import Client
+from apmp import CONSTANTS
+from apmp.db_helper import get_downpayment_promos
 
 class LoginFormClient(FlaskForm):
     client_id = StringField(label='Client ID', validators=[DataRequired()])
@@ -31,16 +31,20 @@ class AddClientForm(FlaskForm):
     phase_number = IntegerField(label='Phase number', validators=[DataRequired()])
     lawn_number = IntegerField(label='Lawn number', validators=[DataRequired()])
     lot_number = IntegerField(label='Lot number', validators=[DataRequired()])
-    lot_status = SelectField(label='Status', choices=LOT.LOT_STATUS)
+    lot_types = SelectField(label='Lot type', choices=CONSTANTS.LOT.TYPES)
+    lot_status = SelectField(label='Status', choices=CONSTANTS.LOT.LOT_STATUS)
 
-    # lot purchase details
-    lot_type = SelectField(label='Purchase type', choices=LOT.TYPES)
-    lot_price = FloatField(label='Lot price', validators=[DataRequired()])
-    purchase_type = SelectField(label='Purchase type', choices=LOT.PURCHASE_TYPES)
-    lot_purhase_price = FloatField(label='Lot purchase price', validators=[DataRequired()])
-
+    # lot purchase informations
+    purchase_type = SelectField(label='Purchase type', choices= CONSTANTS.PURCHASE_TYPES.PURCHASE_TYPES)
+    spot_cash_promo = SelectField(label='Spot cash promo', choices=get_downpayment_promos(True))
+    monthly_amortization_promo = SelectField(label='Monthly amortization promo',  choices=get_downpayment_promos(False))
+    # lot_price = FloatField(label='Lot price', validators=[DataRequired()])
     # monthly amortization details
-    down_payment_type = StringField(label='Down payment type', validators=[DataRequired()])
+    # down_payment_type = StringField(label='Down payment type', choices=)
+
+    # monthly amortization payment schedule
+    schedule_types = SelectField(label='Payment schedule type', choices=CONSTANTS.SCHEDULE_TYPES.SCHEDULE_TYPES)
+    date_start = DateField(label='Payment date start', validators=[DataRequired()])
 
     submit = SubmitField(label='Save')
 
@@ -83,7 +87,16 @@ class LotPromoForm(FlaskForm):
     monthly_pay = FloatField(label='Monthly payment', validators=[DataRequired()])
     submit = SubmitField(label='Save')
 
-
 class NewsContentForm(FlaskForm):
     md_code = TextAreaField(label='Input content of news page', validators=[DataRequired()])
     save = SubmitField(label='Save')
+
+class SearchClientForm(FlaskForm):
+    name_to_search = SearchField(validators=[DataRequired()])
+    search = SubmitField(label='Search')
+
+class PayMonthlyAmortizationForm(FlaskForm):
+    amount_paid = FloatField(label="Amount paid", validators=[DataRequired()])
+    payment_methods = SelectField(label="Payment method", choices=CONSTANTS.PAYMENT_METHODS.PAYMENT_METHODS)
+    # paid_for_the_month_of = SelectField(label="Pay for the month of", choices=['June', 'July']) # for bulk payment
+    confirm = SubmitField(label='Confirm')

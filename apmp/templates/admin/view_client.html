@@ -1,0 +1,97 @@
+{% extends 'admin/base.html' %} {% block content %}
+
+<div class="row">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">CLIENT INFORMATIONS</h4>
+      <div class="d-flex align-items-end ms-3">
+      <div style="width: 150px; font-size: 17px; font-weight: 500">Name:</div>
+        <div>
+          {{ client_info.last_name }}, {{ client_info.first_name }} {{
+          client_info.last_name[0] }}.
+        </div>
+      </div>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 150px; font-size: 17px; font-weight: 500">
+          Client ID:
+        </div>
+        <div>{{ client_info.client_id }}</div>
+      </div>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 150px; font-size: 17px; font-weight: 500">
+          Email:
+        </div>
+        <div>{{ client_info.email }}</div>
+      </div>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 150px; font-size: 17px; font-weight: 500">
+          Mobile #:
+        </div>
+        <div>{{ client_info.mobile_number }}</div>
+      </div>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 150px; font-size: 17px; font-weight: 500">
+          Address:
+        </div>
+        <div>{{ client_info.address }}</div>
+      </div>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 150px; font-size: 17px; font-weight: 500">
+          Birth date:
+        </div>
+        <div>{{ client_info.birth_date }}</div>
+      </div>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 150px; font-size: 17px; font-weight: 500">
+          Name of spouse:
+        </div>
+        <div>{{ client_info.name_of_spouse }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-3">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">LOT OWNED</h4>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Lot type</th>
+              <th>Purchase by</th>
+              <th>Lot status</th>
+              <th>Lot ID</th>
+              <th>Phase# - Law# - Lot#</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for owned_lot in client_info.owned_lots %}
+            <tr>
+              <td class="py-1"> {{ owned_lot.lot_type }}</td>
+              <td> 
+                {% if owned_lot.purchase_detail.purchase_type == 'SPOT CASH'  %}
+                    {{ owned_lot.purchase_detail.purchase_type }}
+                {% else %}
+                    <a href="{{ url_for('monthly_amor', monthly_amor_id = owned_lot.purchase_detail.monthly_amortization.monthly_amortization_id ) }}">
+                        {{ owned_lot.purchase_detail.purchase_type }}
+                    </a>
+                {% endif %}
+
+              </td>
+              <td> {{ owned_lot.status }} </td>
+              <td> {{ owned_lot.lot_id }} </td>
+              <td> {{ owned_lot.lot_number }} - {{ owned_lot.lawn_number }} - {{ owned_lot.lot_number }}</td>
+              <td>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

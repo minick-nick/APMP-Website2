@@ -33,15 +33,21 @@ body {
 }
 
 main {
-    height: 2000px;
     margin-top: 72px;
-    border: 1px solid black;
+    padding: 0;    
 }
 
 footer {
     padding-top: 50px;
     padding-bottom: 50px;
     background-color: rgba(7, 7, 7, 0.75);
+}
+
+.brief-about-us {
+    color: white;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color:#5d1a15d6;
 }
 
 .box {
@@ -97,8 +103,5 @@ footer {
     margin-bottom: 7px;
 }
 
-.rw-conversation-container .rw-header {
-    background-color: aqua;
-}
 
 

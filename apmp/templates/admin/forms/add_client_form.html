@@ -1,145 +1,135 @@
-{% extends 'admin/base.html' %}
-
-
-{% block content %}
+{% extends 'admin/base.html' %} {% block content %}
 
 <div class="row">
-    <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Client Informations</h4>
-          <form method="POST" class="forms-sample">
-          {{ add_client_form.hidden_tag() }}
-          <div class="form-group">
-            {{ add_client_form.first_name.label() }}
-            {{ add_client_form.first_name(class="form-control") }}
-          </div>
-          <div class="form-group">
-              {{ add_client_form.middle_name.label() }}
-              {{ add_client_form.middle_name(class="form-control") }}
-          </div>
-  
-          <div class="form-group">
-              {{ add_client_form.last_name.label() }}
-              {{ add_client_form.last_name(class="form-control") }}
-          </div>
-  
-          <div class="form-group">
-              {{ add_client_form.email.label() }}
-              {{ add_client_form.email(class="form-control") }}
-          </div>
-  
-          <div class="form-group">
-              {{ add_client_form.mobile_number.label() }}
-              {{ add_client_form.mobile_number(class="form-control") }}
-          </div>
-  
-          <div class="form-group">
-              {{ add_client_form.address.label() }}
-              {{ add_client_form.address(class="form-control") }}
-          </div>
-  
-          <div class="form-group">
-              {{ add_client_form.birth_date.label() }}
-              {{ add_client_form.birth_date(class="form-control") }}
-          </div>
-  
-          <div class="form-group">
-              {{ add_client_form.name_of_spouse.label() }}
-              {{ add_client_form.name_of_spouse(class="form-control") }}
-          </div>
-  
-          <div class="form-group">
-              {{ add_client_form.password.label() }}
-              {{ add_client_form.password(class="form-control") }}
-          </div>
-  
-          <hr class="mt-5">
-          <h4 class="card-title">Lot Informations</h4>
-          <div class="d-flex flex-row">
-            <div class="form-group me-3" style="width: 150px">
-                {{ add_client_form.phase_number.label()}}
-                {{ add_client_form.phase_number(class="form-control") }}
-            </div>
-            <div class="form-group me-3" style="width: 150px">
-            {{ add_client_form.lawn_number.label()}}
-            {{ add_client_form.lawn_number(class="form-control") }}
-            </div>
-            <div class="form-group" style="width: 150px">
-                {{ add_client_form.lot_number.label()}}
-                {{ add_client_form.lot_number(class="form-control") }}
-            </div>
-          </div>
-
-        <div class="form-group" style="width: 200px">
-            {{ add_client_form.lot_status.label()}}
-            {{ add_client_form.lot_status(class="form-control") }}
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Client Informations</h4>
+      <form method="POST" class="forms-sample">
+        {{ add_client_form.hidden_tag() }}
+        <div class="form-group">
+          {{ add_client_form.first_name.label() }} {{
+          add_client_form.first_name(class="form-control") }}
         </div>
-          
-          <hr class="mt-5">
-          <h4 class="card-title">Lot Purchase Informations</h4>
+        <div class="form-group">
+          {{ add_client_form.middle_name.label() }} {{
+          add_client_form.middle_name(class="form-control") }}
+        </div>
 
+        <div class="form-group">
+          {{ add_client_form.last_name.label() }} {{
+          add_client_form.last_name(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+          {{ add_client_form.email.label() }} {{
+          add_client_form.email(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+          {{ add_client_form.mobile_number.label() }} {{
+          add_client_form.mobile_number(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+          {{ add_client_form.address.label() }} {{
+          add_client_form.address(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+          {{ add_client_form.birth_date.label() }} {{
+          add_client_form.birth_date(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+          {{ add_client_form.name_of_spouse.label() }} {{
+          add_client_form.name_of_spouse(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+          {{ add_client_form.password.label() }} {{
+          add_client_form.password(class="form-control") }}
+        </div>
+
+        <hr class="mt-5" />
+        <h4 class="card-title">Lot Informations</h4>
+        <div class="d-flex flex-row">
+          <div class="form-group me-3" style="width: 150px">
+            {{ add_client_form.phase_number.label()}} {{
+            add_client_form.phase_number(class="form-control") }}
+          </div>
+          <div class="form-group me-3" style="width: 150px">
+            {{ add_client_form.lawn_number.label()}} {{
+            add_client_form.lawn_number(class="form-control") }}
+          </div>
+          <div class="form-group" style="width: 150px">
+            {{ add_client_form.lot_number.label()}} {{
+            add_client_form.lot_number(class="form-control") }}
+          </div>
+        </div>
+
+        <div class="form-group" style="width: 300px">
+          {{ add_client_form.lot_types.label()}} {{
+          add_client_form.lot_types(class="form-control") }}
+        </div>
+
+        <div class="form-group" style="width: 300px">
+          {{ add_client_form.lot_status.label()}} {{
+          add_client_form.lot_status(class="form-control") }}
+        </div>
+
+        <hr class="mt-5" />
+        <h4 class="card-title">Lot Purchase Informations</h4>
+
+        
+        <div class="form-group" style="width: 300px">
+          {{ add_client_form.purchase_type.label()}} {{
+          add_client_form.purchase_type(class="form-control", id="list", onchange="getSelectedValue();") }}
+        </div>
+        
+        <div id="spot-cash" class="form-group" style="width: 300px">
+          {{ add_client_form.spot_cash_promo.label()}} {{
+          add_client_form.spot_cash_promo(class="form-control") }}
+        </div>
+
+        <div id="monthly-amortization" style="width: 300px; display: none;">
           <div class="form-group">
-
+            {{ add_client_form.monthly_amortization_promo.label()}} {{
+              add_client_form.monthly_amortization_promo(class="form-control") }}
           </div>
-
-          <!--
-                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  ...
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-              </div>
-            </div>
+          <div class="form-group">
+            {{ add_client_form.schedule_types.label() }}
+            {{ add_client_form.schedule_types(class="form-control") }}
           </div>
-           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
-          </button>
-          -->
+          <div class="form-group">
+            {{ add_client_form.date_start.label() }}
+            {{ add_client_form.date_start(class="form-control") }}
+          </div>
+        </div>
 
-          
-          <a href="{{ url_for('clients') }}" class="btn btn-light">Cancel</a>
+        <hr class="mt-5" />
+      
+        <a href="{{ url_for('clients') }}" class="btn btn-light">Cancel</a>
 
-          {{ add_client_form.submit(class="btn btn-primary") }}
-          
-         
-          
-          <!--
-              <select id="greet" onchange="getOption()">
-            <option value="hello">Hello</option>
-            <option value="goodbye">Goodbye</option>
-            <option value="seeYou">See you...</option>
-          </select>
-          -->
-          </form>
-          <!--
-            <script>
-            function getOption() {
-                const select = document.createElement("select");
-                select.setAttribute("id", "greet2");
-                const option = document.createElement("option");
-                option.setAttribute("value", "hello2")
-                select.appendChild(option);
-
-                node2 = document.createTextNode("hello2")
-                node.appendChild(node2)
-                const element = document.getElementById("div1");
-                element.appendChild(para);
-            }
-          </script>
-          -->
-      </div>
+        {{ add_client_form.submit(class="btn btn-primary") }}
+      </form>
     </div>
   </div>
+</div>
 
+<script>
+  function getSelectedValue() {
+    var selected = document.getElementById("list").value;
+
+    var spot_cash = document.getElementById("spot-cash");
+    var monthly_amortization = document.getElementById("monthly-amortization");
+
+      if(selected === "SPOT CASH") {
+          spot_cash.style.display = "block";
+          monthly_amortization.style.display = "none";
+      } else {
+        spot_cash.style.display = "none";
+        monthly_amortization.style.display = "block";
+      }
+  }
+</script>
 {% endblock %}
-
-       

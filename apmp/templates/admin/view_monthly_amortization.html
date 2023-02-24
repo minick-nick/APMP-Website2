@@ -1,0 +1,152 @@
+{% extends 'admin/base.html' %} {% block content %}
+
+<div class="row">
+  <div class="card">
+    <div class="card-body">
+      <p class="card-title">MONTHLY AMORTIZATION STATUS</p>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 220px; font-size: 17px; font-weight: 500">
+          Status:
+        </div>
+        <div>{{ m_amortization.status }}</div>
+      </div>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 220px; font-size: 17px; font-weight: 500">
+          Number of months to pay:
+        </div>
+        <div>{{ m_amortization.num_of_mos_to_pay }}</div>
+      </div>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 220px; font-size: 17px; font-weight: 500">
+          Monthly payment:
+        </div>
+        <div>{{ m_amortization.monthly_payment }}</div>
+      </div>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 220px; font-size: 17px; font-weight: 500">
+          Total payment:
+        </div>
+        <div>{{ m_amortization.total_payment }}</div>
+      </div>
+      <div class="d-flex align-items-end ms-3">
+        <div style="width: 220px; font-size: 17px; font-weight: 500">
+          Remaining amount to pay:
+        </div>
+        <div>{{ m_amortization.balance }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="card">
+    <div class="card-body">
+      <p class="card-title mb-0">PAYMENT SCHEDULE</p>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Recommended payment date</th>
+              <th>Amount</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sche in payment_sche %}
+            <tr>
+              <td>{{ sche['STATUS'] }}</td>
+              <td>{{ sche['DATE_TO_PAY'] }}</td>
+              <td>{{ m_amortization.monthly_payment }}</td>
+              <td>
+                <!-- Button trigger modal -->
+                {% if sche['STATUS'] == 'NOT PAID'%}
+                <a
+                  class="btn btn-success"
+                  data-bs-toggle="modal"
+                  data-bs-target="#paymodal-{{ sche['MONTH_NUMBER'] }}"
+                >
+                  Pay
+                </a>
+                {% endif %}
+              </td>
+            </tr>
+
+            <!-- Modal -->
+            <div
+              class="modal fade"
+              id="paymodal-{{sche['MONTH_NUMBER']}}"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form method="POST">
+                    <div class="modal-header">
+                      <h1
+                        class="modal-title fs-5"
+                        id="paymodal-{{sche['MONTH_NUMBER']}}"
+                      >
+                        Pay
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <p style="font-weight: 600">
+                        Pay for {{ sche['DATE_TO_PAY'] }}
+                      </p>
+
+                      {{ pay_form.hidden_tag() }}
+                      <div class="form-group">
+                        {{ pay_form.amount_paid.label() }} {{
+                        pay_form.amount_paid(class="form-control") }}
+                      </div>
+
+                      <div class="form-group">
+                        {{ pay_form.payment_methods.label() }} {{
+                        pay_form.payment_methods(class="form-control") }}
+                      </div>
+                      <input
+                        id="month_num"
+                        name="month_num"
+                        type="hidden"
+                        value="{{sche['MONTH_NUMBER']}}"
+                      />
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      {{ pay_form.confirm(class="btn btn-primary") }}
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">PAYMENT HISTORY</h4>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

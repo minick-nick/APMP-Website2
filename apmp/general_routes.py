@@ -1,11 +1,9 @@
 from apmp import app, db
-from apmp import CLIENT_ID_START
-from apmp.models import Client, Admin, Lot, VisitorMessage, LotPromo, NewsContent, login_manager
-from flask import render_template, redirect, url_for, request, flash
-from flask_login import login_user, logout_user, login_required
-from apmp.forms import LoginFormClient, LoginFormAdmin, AddClientForm, MessageForm
+from apmp.models import LotPromo, NewsContent, login_manager
+from flask import render_template, redirect, url_for, request
+from flask_login import logout_user
+from apmp.forms import MessageForm
 from apmp.db_helper import push_visitor_message
-from apmp import LOT
 from markdown import markdown
 from apmp.util import modify_html_code
 

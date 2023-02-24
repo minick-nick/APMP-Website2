@@ -79,22 +79,42 @@ class Lot(db.Model):
     lot_number = db.Column(db.Integer, nullable=False)
     lawn_number = db.Column(db.Integer, nullable=False)
     phase_number = db.Column(db.Integer)
+    lot_type = db.Column(db.String)
     status = db.Column(db.String(length=30))
     owner_id = db.Column(db.Integer, db.ForeignKey('client.client_id'))
+    purchase_detail = db.relationship('LotPurchaseDetail', backref='lot', uselist=False)
 
-class PurchaseDetail():
+class LotPurchaseDetail(db.Model):
     purchase_detail_id = db.Column(db.Integer, primary_key=True)
-    lot_type = db.Column(db.String, nullable=False)
-    lot_price = db.Column(db.Float, nullable=False)
     purchase_type = db.Column(db.String, nullable=False) # if monthly amortization or installment
-    lot_purchase_price = db.Column(db.String, nullable=False)
+    selected_promo = db.Column(db.Text)
+    # lot_purchase_price = db.Column(db.String) 
+    lot_id = db.Column(db.Integer, db.ForeignKey('lot.lot_id'), unique=True)
+    monthly_amortization = db.relationship('MonthlyAmortization', backref='lot_purchase_detail', uselist=False)
 
-class MonthlyAmortization():
+class MonthlyAmortization(db.Model):
     monthly_amortization_id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String, nullable=False)
-    down_payment_type = db.Column(db.String, nullable=False)
-    payment_schedule = db.Column(db.String, nullable=False)
-    balance = db.Column(db.String, nullable=False)
+    num_of_mos_to_pay = db.Column(db.Integer, nullable=False)
+    total_payment = db.Column(db.Float, nullable=False)
+    monthly_payment = db.Column(db.Float, nullable=False)
+    balance = db.Column(db.Float, nullable=False)
+    schedule_type = db.Column(db.String, nullable=False)
+    payment_schedule = db.Column(db.Text, nullable=False)
+    lot_purchase_detail_id = db.Column(db.Integer, db.ForeignKey('lot_purchase_detail.purchase_detail_id'), unique=True)
+    payment_history = db.relationship('PaymentHistory', backref='monthly_amortization')
+
+
+class PaymentHistory(db.Model):
+    payment_history_id = db.Column(db.Integer, primary_key=True)
+    date_paid = db.Column(db.DateTime, default=now)
+    payment_method = db.Column(db.String, nullable=False)
+    paid_for_month_of = db.Column(db.String, nullable=False)
+    amount_paid = db.Column(db.Float, nullable=False)
+    change = db.Column(db.Float)
+    remaining_amount_to_pay = db.Column(db.Float, nullable=False)
+    monthly_amor_id = db.Column(db.Integer, db.ForeignKey('monthly_amortization.monthly_amortization_id'))
+
 
 class VisitorMessage(db.Model):
     message_id = db.Column(db.Integer, primary_key=True)
