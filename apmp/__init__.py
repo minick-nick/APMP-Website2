@@ -9,7 +9,9 @@ from apmp.CONSTANTS import LOT
 app = Flask(__name__)
 app.app_context().push()
 
-connection_uri = 'postgresql://postgres:password@localhost/apmp_db'
+# 'postgresql://postgres:password@localhost/apmp_db'
+#postgresql://apmp_db_test_user:A2KtDznZHpGFHiu57JmIH8O5SLPSkDpg@dpg-cftma4h4reb6ks0r32ng-a.singapore-postgres.render.com/apmp_db_test
+connection_uri = 'postgresql://apmp_db_test_user:A2KtDznZHpGFHiu57JmIH8O5SLPSkDpg@dpg-cftma4h4reb6ks0r32ng-a.singapore-postgres.render.com/apmp_db_test'
 app.config['SECRET_KEY'] = 'sdfsdfsdfsdfsdfsdfsdfsd' # This secret key should be random. Change this later.
 app.config['SQLALCHEMY_DATABASE_URI'] = connection_uri
 
