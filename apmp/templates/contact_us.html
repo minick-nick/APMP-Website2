@@ -1,34 +1,189 @@
-{% extends 'base.html' %}
-{% block title %} Contact Us {% endblock %}
-{% block content %}
-<div class="container">
-  <h1>Contact Us</h1>
-</div>
-{% endblock %}
+{% extends 'base.html' %} {% block title %} Contact Us {% endblock %} {% block
+content %}
 
-{% block message_form %}
-  <form method="POST">
-    {{ msgForm.hidden_tag() }}
-    <h4>Send us message</h4>
-    <div>
-      {{ msgForm.name(class="form-control", placeholder="Name") }}
-      <!-- <input class="form-control" type="text" placeholder="Name" aria-label="default input example">-->
+<div class="position-relative">
+  <img
+    id="image"
+    src="{{ url_for('static', filename='images/apmp-gate.jpg') }}"
+    alt=""
+    style="width: 100%; height: 750px; object-fit: cover"
+  />
+
+  <div class="position-absolute top-0 start-0" style="width: 100%">
+    <div style="background-color: rgba(0, 0, 0, 0.563); height: 750px"></div>
+  </div>
+
+  <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="d-flex flex-column">
+      <div class="text-center mb-3">
+        <h2 style="color: white">CONTACT US</h2>
+      </div>
+
+      <div
+        class="d-flex flex-row"
+        style="
+          background-color: rgba(161, 154, 154, 0.563);
+          padding: 20px;
+          border-radius: 30px;
+        "
+      >
+        <a
+          href="https://www.facebook.com/apostlepaulmemorialpark"
+          target="_blank"
+          ><img
+            style="max-width: 50px; margin-right: 15px"
+            src="{{ url_for('static', filename='images/icon/facebook.png')}}"
+            alt="Facebook logo"
+        /></a>
+        <a href=""
+          ><img
+            style="max-width: 50px; margin-right: 15px"
+            src="{{ url_for('static', filename='images/icon/gmail.png')}}"
+            alt="Gmail logo"
+        /></a>
+        <a href=""
+          ><img
+            style="max-width: 50px; margin-right: 7px"
+            src="{{ url_for('static', filename='images/icon/yahoo.png')}}"
+            alt="Yahoo logo"
+        /></a>
+        <a href=""
+          ><img
+            style="max-width: 50px; margin-right: 7px"
+            src="{{ url_for('static', filename='images/icon/location.png')}}"
+            alt="Location logo"
+        /></a>
+        <a href=""
+          ><img
+            style="max-width: 50px"
+            src="{{ url_for('static', filename='images/icon/phone.png')}}"
+            alt="Phone logo"
+        /></a>
+      </div>
     </div>
-    <div>
-      {{ msgForm.email(class="form-control", placeholder="Email")}}
+  </div>
+</div>
+<div class="container" style="margin-bottom: 100px">
+  <div style="padding-top: 40px">
+    <h1 style="color: #413a3a">Headquarter</h1>
+
+    <div style="height: 2px; width: 100%; background-color: #7a7a7a"></div>
+  </div>
+
+  <div class="row mt-5" style="color: #413a3a;">
+    <div class="col col-12 col-sm-12 col-md-6">
+      <h2 class="mb-4">Main Office</h2>
+      <ul style="list-style: none;">
+        <li>
+          <a href=""
+            ><img
+              style="max-width: 40px; margin-right: 7px"
+              src="{{ url_for('static', filename='images/icon/location.png')}}"
+              alt="Location logo"
+          /></a>
+          <span style="font-weight: 600;">San Eugenio, Aringay, La Union</span>
+        </li>
+      </ul>
+
+      <h2 class="mb-4 mt-5">Contact Us</h2>
+      <ul style="list-style: none;">
+        <li>
+          <a href=""
+            ><img
+              style="max-width: 40px; margin-right: 7px"
+              src="{{ url_for('static', filename='images/icon/phone.png')}}"
+              alt="Phone logo"
+          /></a>
+          <span style="font-weight: 600;">091-2423-4234 (Globe)</span>
+        </li>
+        <li>
+          <a href=""
+            ><img
+              style="max-width: 40px; margin-right: 7px"
+              src="{{ url_for('static', filename='images/icon/phone.png')}}"
+              alt="Phone logo"
+          /></a>
+          <span style="font-weight: 600;">091-2423-4234 (Smart)</span>
+        </li>
+        <li>
+          <a href=""
+            ><img
+              style="max-width: 40px; margin-right: 7px"
+              src="{{ url_for('static', filename='images/icon/phone.png')}}"
+              alt="Phone logo"
+          /></a>
+          <span style="font-weight: 600;">091-2423-4234 (Dito)</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col col-12 col-sm-12 col-md-6">
+      <div class="d-flex">
+        <div class="me-5 flex-auto flex-md-fill" style= "background-color: #7a7a7a; width: 2px;"></div>
+        <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3828.214547289505!2d120.35647571478665!3d16.363029635843713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x339177eefab3e8cb%3A0x4f58688624f91c21!2sApostle%20Paul%20Memorial%20Park!5e0!3m2!1sen!2sph!4v1677377856363!5m2!1sen!2sph"
+        width="600"
+        height="450"
+        style="border: 0"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var image = document.getElementById("image");
+  var currentImageIndex = 1;
+
+  setInterval(function () {
+    currentImageIndex++;
+    if (currentImageIndex > 3) {
+      currentImageIndex = 1;
+    }
+
+    var image_path = "";
+
+    switch (currentImageIndex) {
+      case 1:
+        image_path = "{{ url_for('static', filename='images/apmp-gate.jpg') }}";
+        break;
+      case 2:
+        image_path = "{{ url_for('static', filename='images/image2.jpg') }}";
+        break;
+      case 3:
+        image_path = "{{ url_for('static', filename='images/image3.jpg') }}";
+        break;
+    }
+
+    image.src = image_path;
+  }, 3000);
+</script>
+{% endblock %} {% block message_form %}
+<form method="POST">
+  {{ msgForm.hidden_tag() }}
+  <h4>Send us message</h4>
+  <div>
+    {{ msgForm.name(class="form-control", placeholder="Name") }}
+    <!-- <input class="form-control" type="text" placeholder="Name" aria-label="default input example">-->
+  </div>
+  <div>
+    {{ msgForm.email(class="form-control", placeholder="Email")}}
     <!--  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email">-->
-    </div>
-    <div>
-      {{ msgForm.contact_number(class="form-control", placeholder="Contact number")}}
-      <!-- <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Contact number"> -->
-    </div>
-    <div>
-      {{ msgForm.message(class="form-control", rows="3", placeholder="Message")}}
-      <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Message"></textarea> -->
-    </div>
-    <div class="d-flex justify-content-end mt-3">
-      {{ msgForm.submit(class="btn btn-primary")}}
+  </div>
+  <div>
+    {{ msgForm.contact_number(class="form-control", placeholder="Contact
+    number")}}
+    <!-- <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Contact number"> -->
+  </div>
+  <div>
+    {{ msgForm.message(class="form-control", rows="3", placeholder="Message")}}
+    <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Message"></textarea> -->
+  </div>
+  <div class="d-flex justify-content-end mt-3">
+    {{ msgForm.submit(class="btn btn-primary")}}
     <!--  <button type="submit" class="btn btn-primary">Send</button>-->
-    </div>
-  </form>
+  </div>
+</form>
 {% endblock %}

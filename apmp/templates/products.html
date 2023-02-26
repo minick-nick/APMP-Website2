@@ -1,35 +1,329 @@
-{% extends 'base.html' %}
-{% block title %} Products {% endblock %}
-{% block content %}
+{% extends 'base.html' %} {% block title %} Products {% endblock %} {% block
+content %}
 <div class="container">
-  <h1>Products</h1>
-  <a href="{{ url_for('interest_pro') }}">DOWNPAYMENT / INTEREST PROMO</a>
-</div>
-{% endblock %}
+  <div style="padding-top: 40px">
+    <a
+      class="mt-5"
+      href="{{ url_for('interest_pro') }}"
+      style="text-decoration: none; font-weight: 600"
+      >DOWNPAYMENT / INTEREST PROMO</a
+    >
+    <h1 class="text-center mt-4" style="color: #413a3a">Products</h1>
+  </div>
 
-{% block message_form %}
-  <form method="POST">
-    {{ msgForm.hidden_tag() }}
-    <h4>Send us message</h4>
-    <div>
-      {{ msgForm.name(class="form-control", placeholder="Name") }}
-      <!-- <input class="form-control" type="text" placeholder="Name" aria-label="default input example">-->
+  <div class="container" style="margin-top: 80px;">
+    <div class="d-flex mb-5">
+      <h2
+        style="
+          color: white;
+          background-color: #546b62;
+          padding-left: 10px;
+          padding-right: 10px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          height: fit-content;
+          margin: 0;
+        "
+      >
+        Lots
+      </h2>
+      <div class="flex-fill" style="position: relative">
+        <hr style="width: 100%; bottom: 0; position: absolute; margin: 0" />
+      </div>
     </div>
-    <div>
-      {{ msgForm.email(class="form-control", placeholder="Email")}}
+
+    <div class="card mb-5 border-secondary mx-auto" style="max-width: 750px;">
+      <img
+        src="{{url_for('static', filename='images/image2.jpg')}}"
+        class="card-img-top"
+        alt="..."
+      />
+      <div class="card-body">
+        <h3 class="card-title">STANDARD LOT</h3>
+        <p class="card-text" style="font-weight: 400; font-size: 18px">
+          This is a wider card with supporting text below as a natural lead-in
+          to additional content. This content is a little bit longer. Lorem
+          ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
+          voluptatibus error architecto voluptas, inventore harum, commodi
+          quaerat officiis ab laborum quae illo. Libero, aliquam quisquam? Earum
+          odio harum dolorem quae. Vel est tempora exercitationem illum corporis
+          mollitia perferendis voluptates blanditiis, consequuntur id eius
+          quidem! Aperiam iste labore iusto, suscipit a sequi.
+        </p>
+        <ul class="card-text" style="font-weight: 600">
+          <li>
+            <small>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+              officiis fugit molestias.
+            </small>
+          </li>
+          <li>
+            <small>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+              officiis fugit molestias.
+            </small>
+          </li>
+          <li>
+            <small>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+              officiis fugit molestias.
+            </small>
+          </li>
+        </ul>
+        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+      </div>
+    </div>
+    <div class="card mb-5 border-secondary mx-auto" style="max-width: 750px;">
+      <img
+        src="{{url_for('static', filename='images/image2.jpg')}}"
+        class="card-img-top"
+        alt=""
+      />
+      <div class="card-body" id="prime-lot">
+        <h3 class="card-title">PRIME LOT</h3>
+        <p class="card-text" style="font-weight: 400; font-size: 18px">
+          This is a wider card with supporting text below as a natural lead-in
+          to additional content. This content is a little bit longer. Lorem
+          ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
+          voluptatibus error architecto voluptas, inventore harum, commodi
+          quaerat officiis ab laborum quae illo. Libero, aliquam quisquam? Earum
+          odio harum dolorem quae. Vel est tempora exercitationem illum corporis
+          mollitia perferendis voluptates blanditiis, consequuntur id eius
+          quidem! Aperiam iste labore iusto, suscipit a sequi.
+        </p>
+        <ul class="card-text" style="font-weight: 600">
+          <li>
+            <small>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+              officiis fugit molestias.
+            </small>
+          </li>
+          <li>
+            <small>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+              officiis fugit molestias.
+            </small>
+          </li>
+          <li>
+            <small>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+              officiis fugit molestias.
+            </small>
+          </li>
+        </ul>
+        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+      </div>
+    </div>
+
+    <div class="card mb-5 border-secondary mx-auto" style="max-width: 750px;">
+      <img
+        src="{{url_for('static', filename='images/image2.jpg')}}"
+        class="card-img-top"
+        alt=""
+      />
+      <div class="card-body" id="prime-lot">
+        <h3 class="card-title">SUPER PRIME LOT</h3>
+        <p class="card-text" style="font-weight: 400; font-size: 18px">
+          This is a wider card with supporting text below as a natural lead-in
+          to additional content. This content is a little bit longer. Lorem
+          ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
+          voluptatibus error architecto voluptas, inventore harum, commodi
+          quaerat officiis ab laborum quae illo. Libero, aliquam quisquam? Earum
+          odio harum dolorem quae. Vel est tempora exercitationem illum corporis
+          mollitia perferendis voluptates blanditiis, consequuntur id eius
+          quidem! Aperiam iste labore iusto, suscipit a sequi.
+        </p>
+        <ul class="card-text" style="font-weight: 600">
+          <li>
+            <small>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+              officiis fugit molestias.
+            </small>
+          </li>
+          <li>
+            <small>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+              officiis fugit molestias.
+            </small>
+          </li>
+          <li>
+            <small>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+              officiis fugit molestias.
+            </small>
+          </li>
+        </ul>
+        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top: 80px; margin-bottom: 100px;">
+    <div class="d-flex mb-5">
+      <h2
+        style="
+          color: white;
+          background-color: #546b62;
+          padding-left: 10px;
+          padding-right: 10px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          height: fit-content;
+          margin: 0;
+        "
+      >
+        Plots
+      </h2>
+      <div class="flex-fill" style="position: relative">
+        <hr style="width: 100%; bottom: 0; position: absolute; margin: 0" />
+      </div>
+    </div>
+    <div class="card border-secondary mx-auto mt-4" style="max-width: 850px">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            src="{{ url_for('static', filename='images/image1.jpg') }}"
+            class="img-fluid rounded-start"
+            alt="..."
+            style="height: 100%; object-fit: cover"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">SINGLE PLOT</h5>
+            <p class="card-text">
+              This is a wider card with supporting text below as a natural lead-in
+              to additional content. This content is a little bit longer.
+            </p>
+            <ul class="card-text" style="font-weight: 600">
+              <li>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+                  officiis fugit molestias.
+                </small>
+              </li>
+              <li>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+                  officiis fugit molestias.
+                </small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card border-secondary mx-auto mt-4" style="max-width: 850px">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            src="{{ url_for('static', filename='images/image1.jpg') }}"
+            class="img-fluid rounded-start"
+            alt="..."
+            style="height: 100%; object-fit: cover"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">DOUBLE PLOT</h5>
+            <p class="card-text">
+              This is a wider card with supporting text below as a natural lead-in
+              to additional content. This content is a little bit longer.
+            </p>
+            <ul class="card-text" style="font-weight: 600">
+              <li>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+                  officiis fugit molestias.
+                </small>
+              </li>
+              <li>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+                  officiis fugit molestias.
+                </small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card border-secondary mx-auto mt-4" style="max-width: 850px">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            src="{{ url_for('static', filename='images/image1.jpg') }}"
+            class="img-fluid rounded-start"
+            alt="..."
+            style="height: 100%; object-fit: cover"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">FAMILY PLOT</h5>
+            <p class="card-text">
+              This is a wider card with supporting text below as a natural lead-in
+              to additional content. This content is a little bit longer.
+            </p>
+            <ul class="card-text" style="font-weight: 600">
+              <li>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+                  officiis fugit molestias.
+                </small>
+              </li>
+              <li>
+                <small>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Voluptatum necessitatibus, libero quam ipsa minus ducimus esse
+                  officiis fugit molestias.
+                </small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block message_form %}
+<form method="POST">
+  {{ msgForm.hidden_tag() }}
+  <h4>Send us message</h4>
+  <div>
+    {{ msgForm.name(class="form-control", placeholder="Name") }}
+    <!-- <input class="form-control" type="text" placeholder="Name" aria-label="default input example">-->
+  </div>
+  <div>
+    {{ msgForm.email(class="form-control", placeholder="Email")}}
     <!--  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email">-->
-    </div>
-    <div>
-      {{ msgForm.contact_number(class="form-control", placeholder="Contact number")}}
-      <!-- <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Contact number"> -->
-    </div>
-    <div>
-      {{ msgForm.message(class="form-control", rows="3", placeholder="Message")}}
-      <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Message"></textarea> -->
-    </div>
-    <div class="d-flex justify-content-end mt-3">
-      {{ msgForm.submit(class="btn btn-primary")}}
+  </div>
+  <div>
+    {{ msgForm.contact_number(class="form-control", placeholder="Contact
+    number")}}
+    <!-- <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Contact number"> -->
+  </div>
+  <div>
+    {{ msgForm.message(class="form-control", rows="3", placeholder="Message")}}
+    <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Message"></textarea> -->
+  </div>
+  <div class="d-flex justify-content-end mt-3">
+    {{ msgForm.submit(class="btn btn-primary")}}
     <!--  <button type="submit" class="btn btn-primary">Send</button>-->
-    </div>
-  </form>
+  </div>
+</form>
 {% endblock %}

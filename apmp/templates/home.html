@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
 
   <div class="position-relative">
-    <img id="image" src="{{ url_for('static', filename='images/image1.jpg') }}" alt="" style="width: 100%; height: 750px; object-fit: cover;">
+    <img id="image" src="{{ url_for('static', filename='images/apmp-gate.jpg') }}" alt="" style="width: 100%; height: 750px; object-fit: cover;">
   
     <div class="position-absolute top-50 start-50 translate-middle">
       <div style="background-color: rgba(0, 0, 0, 0.563); color: white; padding: 40px; border-radius: 10px;">
@@ -18,7 +18,7 @@
 
   <div class="card my-5 mx-5 py-5 px-4 border-secondary">
     <div class="d-flex justify-content-center mb-5">
-      <h2 style="color: white; background-color: #198754; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px;">Our Products</h2>
+      <h2 style="color: white; background-color: #546B62; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px;">Our Products</h2>
     </div>
       <div class="card border-secondary mx-auto" style="max-width: 850px;">
         <div class="row g-0">
@@ -33,7 +33,7 @@
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
               -->
               <div class="d-flex justify-content-end">
-                <a href="#" class="btn btn-outline-secondary btn-sm">READ MORE</a>
+                <a href="#" class="btn btn-outline-primary btn-sm">READ MORE</a>
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@
               <h5 class="card-title">PRIME LOT</h5>
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
               <div class="d-flex justify-content-end">
-                <a href="#" class="btn btn-outline-primary btn-sm">READ MORE</a>
+                <a href="{{url_for('products')}}" class="btn btn-outline-primary btn-sm">READ MORE</a>
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@
               <h5 class="card-title">SUPER PRIME LOT</h5>
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
               <div class="d-flex justify-content-end">
-                <a href="#" class="btn btn-outline-success btn-sm">READ MORE</a>
+                <a href="#" class="btn btn-outline-primary btn-sm">READ MORE</a>
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@
             </p>
           </div>
           <div class="col col-12 col-sm-12 col-md-5">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/4wHLb-dvLy0?start=53&autoplay=1&mute=1"" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/4wHLb-dvLy0?start=53&autoplay=1&mute=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
       </div>
     </div>
@@ -106,7 +106,7 @@
 
       switch(currentImageIndex) {
         case 1: 
-          image_path = "{{ url_for('static', filename='images/image1.jpg') }}";
+          image_path = "{{ url_for('static', filename='images/apmp-gate.jpg') }}";
         break;
         case 2: 
           image_path = "{{ url_for('static', filename='images/image2.jpg') }}";

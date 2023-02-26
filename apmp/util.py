@@ -1,6 +1,10 @@
 from bs4 import BeautifulSoup
-from datetime import datetime, timedelta
-from apmp.CONSTANTS import SCHEDULE_TYPES, MONTHLY_AMORTIZATION
+from datetime import datetime, timedelta, date
+from apmp.CONSTANTS import SCHEDULE_TYPES, MONTHLY_AMORTIZATION, LOT
+from html2image import Html2Image
+from apmp.models import VisitorMessage, Lot
+from apmp import db
+
 
 def modify_html_code(html_code):
     soup = BeautifulSoup(html_code, features='html.parser')
@@ -74,4 +78,46 @@ class Schedule():
             "AMOUNT_PAID" : self.amount_paid
         }
 
-# print(generate_payment_schedule(datetime(month=2, day=22, year=2023), SCHEDULE_TYPES.EVERY_LAST_DAY_OF_MONTH, 12))
+def con_receipt_to_image(html_file, file_name):
+    hti = Html2Image()
+
+    hti.screenshot(
+        html_file=html_file, save_as=file_name
+    )
+
+class Dashboard():
+    def __init__(self):
+        self.page_view = 0
+
+        date_today = date.today()
+        msgs = VisitorMessage.query.all()
+        self.new_que_req = len([1 for msg in msgs if str(msg.date_received).split(' ')[0] == str(date_today)])
+
+        self.new_cli_msg = 0
+
+        self.m_amor = 0
+        self.sl_vac = 0
+        self.sl_con = 0
+        self.sl_oc = 0
+        self.tl_vac = 0
+        self.tl_con = 0
+        self.tl_oc = 0
+
+        lots = Lot.query.all()
+
+        for lot in lots:
+            if lot.status == LOT.MONTHLY_AMORTIZATION:
+                self.m_amor += 1
+            elif lot.status == LOT.SOLD_LOT_VACANT:
+                self.sl_vac += 1
+            elif lot.status == LOT.SOLD_LOT_CONSUMED:
+                self.sl_con += 1
+            elif lot.status == LOT.SOLD_LOT_OCCUPIED:
+                self.sl_oc += 1
+            elif lot.status == LOT.TRANSFERRED_LOT_VACANT:
+                self.tl_vac += 1
+            elif lot.status == LOT.TRANSFERRED_LOT_CONSUMED:
+                self.tl_con += 1
+            elif lot.status == LOT.TRANSFERRED_LOT_OCCUPIED:
+                self.tl_oc += 1
+

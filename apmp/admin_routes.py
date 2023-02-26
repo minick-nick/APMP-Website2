@@ -1,12 +1,15 @@
 from apmp import CONSTANTS, app, db
-from apmp.models import Client, Admin, Lot, VisitorMessage, LotPromo, NewsContent, LotPurchaseDetail, MonthlyAmortization, PaymentHistory, login_manager
+from apmp.models import Client, Admin, Lot, VisitorMessage, LotPromo, NewsContent, LotPurchaseDetail, MonthlyAmortization, PaymentHistory, AvailableAndNotAvailbaleLots, login_manager
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required
-from apmp.forms import  LoginFormAdmin, AddClientForm, LotPromoForm, LotPromoForm, NewsContentForm, SearchClientForm, PayMonthlyAmortizationForm
+from apmp.forms import  LoginFormAdmin, AddClientForm, LotPromoForm, LotPromoForm,NewsContentForm, SearchClientForm, PayMonthlyAmortizationForm, AddClientLotForm
 from markdown import markdown
-from apmp.util import modify_html_code, generate_payment_schedule
+from apmp.util import modify_html_code, generate_payment_schedule, con_receipt_to_image
+from apmp.util import Dashboard
 from datetime import datetime
 import json
+from apmp.db_helper import make_lot_unavail, get_lots, get_all_lots
+
 
 @app.route('/login_admin', methods=['GET', 'POST'])
 def login_admin():
@@ -29,10 +32,12 @@ def login_admin():
                 flash(f'The username you entered isn’t connected to an account.', category='warning')
     return render_template('login/admin.html', loginFormAdmin=loginFormAdmin)
 
+@app.route('/admin')
 @app.route('/admin/dashboard')
 @login_required
 def admin():
-    return render_template('admin/dashboard.html')
+    dash = Dashboard()
+    return render_template('admin/dashboard.html', dash=dash)
 
 @app.route('/admin/clients', methods=['GET', 'POST'])
 @login_required
@@ -42,9 +47,29 @@ def clients():
 
     if request.method == 'POST':
         if search_bar.validate_on_submit:
-            name_to_search = search_bar.name_to_search.data
-            #clients = Client.query.filter_by(first_name=name_to_search)
-    
+            keyword = search_bar.name_to_search.data
+
+            found_fname = Client.query.filter_by(first_name=keyword)
+            found_lname = Client.query.filter_by(last_name=keyword)
+            found_email = Client.query.filter_by(email=keyword)
+
+            clients_found = None
+
+            if found_fname.first():
+                clients_found = found_fname
+            elif found_lname.first():
+                clients_found = found_lname
+            elif found_email.first():
+                clients_found = found_email
+
+            if clients_found:
+                clients = clients_found
+                print(clients.first())
+            else:
+                print("Client not found")
+                flash(f'{keyword} not found', category='warning')
+
+
     return render_template('admin/clients.html', clients=clients, search_bar=search_bar)
 
 @app.route('/admin/queries/visitors')
@@ -65,7 +90,14 @@ def lot_image_request():
 @app.route('/admin/map')
 @login_required
 def map():
-    return render_template('admin/map.html')
+
+    all_lots = get_all_lots(1,1)
+    all_all_lots = Lot.query.filter_by(phase_number=1, lawn_number=1)
+
+    label = CONSTANTS.LOT.LABEL
+    status = CONSTANTS.LOT
+    
+    return render_template('admin/map.html', lots = all_lots, LABEL=label, STATUS=status, all_all_lots=all_all_lots)
 
 @app.route('/admin/add_client', methods=['GET', 'POST'])
 @login_required
@@ -97,14 +129,22 @@ def add_client():
             # if Client.query.filter_by(client_id=CLIENT_ID_START).first() == None:
             #    client.client_id = CLIENT_ID_START
 
-            client_lot.phase_number = add_client_form.phase_number.data
-            client_lot.lawn_number = add_client_form.lawn_number.data
-            client_lot.lot_number = add_client_form.lot_number.data
+
+            #bridge
+            phase_number = add_client_form.phase_number.data
+            lawn_number = add_client_form.lawn_number.data
+            lot_number = add_client_form.lot_number.data
+
+            client_lot.phase_number = phase_number
+            client_lot.lawn_number = lawn_number
+            client_lot.lot_number = lot_number
             client_lot.lot_type = add_client_form.lot_types.data
             client_lot.status = add_client_form.lot_status.data
             client_lot.client = client
             db.session.add(client_lot)
             db.session.commit()
+
+            make_lot_unavail(phase_number, lawn_number, lot_number, client_lot.lot_id, client_lot.status)
 
             purchase_type = add_client_form.purchase_type.data
             purchase_detail.purchase_type = purchase_type
@@ -149,7 +189,6 @@ def add_client():
                     "MONTHLY_PAY": promo.monthly_pay,
                     "TOTAL": promo.total
                 }
-
 
                 schedule_type = add_client_form.schedule_types.data
                 monthly_amortization.status = CONSTANTS.MONTHLY_AMORTIZATION.PAYING
@@ -253,11 +292,11 @@ def view_client(client_id):
 def monthly_amor(monthly_amor_id):
 
     m_amortization = MonthlyAmortization.query.filter_by(monthly_amortization_id=monthly_amor_id).first()
-
     payment_sche = m_amortization.payment_schedule
-
     payment_sche = json.loads(payment_sche)
     payment_sche = payment_sche['SCHEDULE']
+
+    payment_history = m_amortization.payment_history
 
     m_amor_pay_form = PayMonthlyAmortizationForm()
 
@@ -265,8 +304,10 @@ def monthly_amor(monthly_amor_id):
         if m_amor_pay_form.validate_on_submit():
             payment_history = PaymentHistory()
 
+            month_num = request.form.get('month_num')
+
             payment_history.payment_method = m_amor_pay_form.payment_methods.data
-            payment_history.paid_for_month_of = "Hello!"
+            payment_history.paid_for_month_of = payment_sche[int(month_num)-1]['DATE_TO_PAY'] 
             payment_history.amount_paid = m_amor_pay_form.amount_paid.data
             payment_history.change =  m_amor_pay_form.amount_paid.data - m_amortization.monthly_payment
             
@@ -276,12 +317,12 @@ def monthly_amor(monthly_amor_id):
             payment_history.monthly_amortization = m_amortization
 
 
+            # modifying specific monthly amortization
             m_amortization.balance = balance
             
             if balance == 0.0:
                 m_amortization.status = CONSTANTS.MONTHLY_AMORTIZATION.FULLY_PAID
 
-            month_num = request.form.get('month_num')
             payment_sche[int(month_num)-1]['STATUS'] = CONSTANTS.MONTHLY_AMORTIZATION.PAID
             m_amortization.payment_schedule = json.dumps({'SCHEDULE': payment_sche})
 
@@ -289,12 +330,124 @@ def monthly_amor(monthly_amor_id):
             db.session.commit()
 
             return redirect(url_for('monthly_amor', monthly_amor_id=monthly_amor_id))    
+    return render_template('admin/view_monthly_amortization.html', m_amortization=m_amortization, payment_his=payment_history, payment_sche=payment_sche, pay_form=m_amor_pay_form)
 
-    return render_template('admin/view_monthly_amortization.html', m_amortization=m_amortization, payment_sche=payment_sche, pay_form=m_amor_pay_form)
 
-
-@app.route('/admin/view_client/monthly_amortization/pay', methods=['POST'])
+@app.route('/admin/client/add_lot/<client_id>', methods=['GET', 'POST'])
 @login_required
-def monthly_amor_pay():
+def add_client_lot(client_id):
+    add_client_lot_form = AddClientLotForm()
+    client = Client.query.filter_by(client_id=client_id).first()
+
+    if request.method == 'POST':
+        if add_client_lot_form.validate_on_submit():
+            client_lot = Lot()
+            purchase_detail = LotPurchaseDetail()
+            monthly_amortization = MonthlyAmortization()
+
+            phase_number = add_client_lot_form.phase_number.data
+            lawn_number = add_client_lot_form.lawn_number.data
+            lot_number = add_client_lot_form.lot_number.data
+
+            client_lot.phase_number = phase_number
+            client_lot.lawn_number = lawn_number
+            client_lot.lot_number = lot_number
+            client_lot.lot_type = add_client_lot_form.lot_types.data
+            client_lot.status = add_client_lot_form.lot_status.data
+            client_lot.client = client
+            db.session.add(client_lot)
+            db.session.commit()
+
+            make_lot_unavail(phase_number, lawn_number, lot_number, client_lot.lot_id, client_lot.status)
+
+            purchase_type = add_client_lot_form.purchase_type.data
+            purchase_detail.purchase_type = purchase_type
+
+            selected_promo = {}
+
+            if purchase_type == CONSTANTS.PURCHASE_TYPES.SPOT_CASH:
+                promo = LotPromo.query.filter_by(lot_promo_id=add_client_lot_form.spot_cash_promo.data).first()
+                
+                selected_promo = {
+                    "TYPE": promo.type,
+                    "LABEL": promo.label,
+                    "IS_SPOT_CASH": promo.is_spot_cash,
+                    "LIST_PRICE": promo.list_price,
+                    "DISC_PER": promo.disc_per,
+                    "DISC_VALUE": promo.disc_value,
+                    "PERP_CARE_FUND_PER": promo.perp_care_fund_per,
+                    "PERP_CARE_VALUE": promo.perp_care_value,
+                    "VAT_PER": promo.vat_per,
+                    "VAT_VAL": promo.vat_val,
+                    "TOTAL": promo.total
+                }
+
+                purchase_detail.selected_promo = str(selected_promo)
+                purchase_detail.lot = client_lot
+                db.session.add(purchase_detail)
+                db.session.commit()
+            
+            elif purchase_type == CONSTANTS.PURCHASE_TYPES.MONTHLY_AMORTIZATION:
+                promo = LotPromo.query.filter_by(lot_promo_id=add_client_lot_form.monthly_amortization_promo.data).first()
+
+                selected_promo = {
+                    "TYPE": promo.type,
+                    "LABEL": promo.label,
+                    "IS_SPOT_CASH": promo.is_spot_cash,
+                    "NUM_OF_MOS_TO_PAY": promo.num_of_mos_to_pay,
+                    "LIST_PRICE": promo.list_price,
+                    "PERP_CARE_FUND_PER": promo.perp_care_fund_per,
+                    "PERP_CARE_VALUE": promo.perp_care_value,
+                    "VAT_PER": promo.vat_per,
+                    "VAT_VAL": promo.vat_val,
+                    "MONTHLY_PAY": promo.monthly_pay,
+                    "TOTAL": promo.total
+                }
+
+
+                schedule_type = add_client_lot_form.schedule_types.data
+                monthly_amortization.status = CONSTANTS.MONTHLY_AMORTIZATION.PAYING
+                monthly_amortization.total_payment = selected_promo['TOTAL']
+                monthly_amortization.balance = selected_promo['TOTAL']
+                monthly_amortization.num_of_mos_to_pay = selected_promo['NUM_OF_MOS_TO_PAY']
+                monthly_amortization.monthly_payment = selected_promo['MONTHLY_PAY']
+                date_start = add_client_lot_form.date_start.data
+                
+                date = str(date_start).split('-')
+                year = int(date[0])
+                month = int(date[1])
+                day = int(date[2])
+
+                s = generate_payment_schedule(date_start=datetime(year=year, month=month, day=day),
+                schedule_type=schedule_type,
+                num_months=selected_promo['NUM_OF_MOS_TO_PAY'])
+                
+                monthly_amortization.payment_schedule = json.dumps(s)
+                monthly_amortization.schedule_type = schedule_type
+                monthly_amortization.lot_purchase_detail = purchase_detail
+            
+                purchase_detail.selected_promo = json.dumps(selected_promo)
+                purchase_detail.lot = client_lot
+                db.session.add_all([purchase_detail, monthly_amortization])
+                db.session.commit()
+
+            #flash(f'{client.first_name} {client.last_name} is successfully registered.', category='success')
+            
+            return redirect(url_for('view_client', client_id = client.client_id))
+
+    if add_client_lot_form.errors != {}:
+        for err_msg in add_client_lot_form.errors.values():
+
+            flash(f'{err_msg}', category='warning')
+
+    return render_template('admin/forms/add_client_lot_form.html', add_lot_form=add_client_lot_form)
+
+
+
+
+# to-do: will do later
+@app.route('/admin/view_client/monthly_amortization/download_receipt')
+@login_required
+def download_receipt():
+    con_receipt_to_image(url_for('templates', filename='home.html'), 'hello.jpg')
     pass
-    

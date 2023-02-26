@@ -145,3 +145,10 @@ class LotPromo(db.Model):
 class NewsContent(db.Model):
     id =  db.Column(db.Integer, primary_key=True)
     md_code = db.Column(db.Text)
+
+class AvailableAndNotAvailbaleLots(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    phase_num = db.Column(db.Integer, nullable=False)
+    lawn_num = db.Column(db.Integer, nullable=False)
+    num_of_lots = db.Column(db.Integer, nullable=False)
+    IDLOTNUM = db.Column(db.Text, nullable=False)

@@ -1,0 +1,89 @@
+{% extends 'admin/base.html' %} {% block content %}
+
+<div class="row">
+  <div class="card">
+    <div class="card-body">
+      <form method="POST" class="forms-sample">
+        {{ add_lot_form.hidden_tag() }}
+        <h4 class="card-title">Lot Informations</h4>
+        <div class="d-flex flex-row">
+          <div class="form-group me-3" style="width: 150px">
+            {{ add_lot_form.phase_number.label()}} {{
+            add_lot_form.phase_number(class="form-control") }}
+          </div>
+          <div class="form-group me-3" style="width: 150px">
+            {{ add_lot_form.lawn_number.label()}} {{
+            add_lot_form.lawn_number(class="form-control") }}
+          </div>
+          <div class="form-group" style="width: 150px">
+            {{ add_lot_form.lot_number.label()}} {{
+            add_lot_form.lot_number(class="form-control") }}
+          </div>
+        </div>
+
+        <div class="form-group" style="width: 300px">
+          {{ add_lot_form.lot_types.label()}} {{
+          add_lot_form.lot_types(class="form-control") }}
+        </div>
+
+        <div class="form-group" style="width: 300px">
+          {{ add_lot_form.lot_status.label()}} {{
+          add_lot_form.lot_status(class="form-control") }}
+        </div>
+
+        <hr class="mt-5" />
+        <h4 class="card-title">Lot Purchase Informations</h4>
+
+        
+        <div class="form-group" style="width: 300px">
+          {{ add_lot_form.purchase_type.label()}} {{
+          add_lot_form.purchase_type(class="form-control", id="list", onchange="getSelectedValue();") }}
+        </div>
+        
+        <div id="spot-cash" class="form-group" style="width: 300px">
+          {{ add_lot_form.spot_cash_promo.label()}} {{
+          add_lot_form.spot_cash_promo(class="form-control") }}
+        </div>
+
+        <div id="monthly-amortization" style="width: 300px; display: none;">
+          <div class="form-group">
+            {{ add_lot_form.monthly_amortization_promo.label()}} {{
+              add_lot_form.monthly_amortization_promo(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ add_lot_form.schedule_types.label() }}
+            {{ add_lot_form.schedule_types(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ add_lot_form.date_start.label() }}
+            {{ add_lot_form.date_start(class="form-control") }}
+          </div>
+        </div>
+
+        <hr class="mt-5" />
+      
+        <a href="{{ url_for('clients') }}" class="btn btn-light">Cancel</a>
+
+        {{ add_lot_form.submit(class="btn btn-primary") }}
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function getSelectedValue() {
+    var selected = document.getElementById("list").value;
+
+    var spot_cash = document.getElementById("spot-cash");
+    var monthly_amortization = document.getElementById("monthly-amortization");
+
+      if(selected === "SPOT CASH") {
+          spot_cash.style.display = "block";
+          monthly_amortization.style.display = "none";
+      } else {
+        spot_cash.style.display = "none";
+        monthly_amortization.style.display = "block";
+      }
+  }
+</script>
+{% endblock %}

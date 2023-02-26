@@ -22,9 +22,9 @@
       </div>
         <div class="ms-auto">
             <form method="POST">
+              {{ search_bar.hidden_tag() }}
               <div class="input-group" style="width:300px">
                 {{ search_bar.search(class="btn-primary") }}
-                {{ search_bar.hidden_tag() }}
                 {{ search_bar.name_to_search(class="form-control", style="height: 41.8px;", placeholder="Search client") }}
               </div>
             </form>

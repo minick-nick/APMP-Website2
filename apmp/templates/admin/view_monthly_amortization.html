@@ -144,7 +144,32 @@
 <div class="row mt-3">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">PAYMENT HISTORY</h4>
+      <p class="card-title mb-0">PAYMENT HISTORY</p>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Amount paid</th>
+              <th>Paid for the month of</th>
+              <th>Payment method</th>
+              <th>Date paid</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for pay_his in payment_his %}
+            <tr>
+              <td>{{ pay_his.amount_paid }}</td>
+              <td>{{ pay_his.paid_for_month_of }}</td>
+              <td>{{ pay_his.payment_method }}</td>
+              <td>{{ pay_his.date_paid }}</td>
+              <td><a href="" class="btn btn-primary">View receipt</a></td>
+            </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

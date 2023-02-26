@@ -1,5 +1,14 @@
 
 class LOT():
+   class LABEL():
+      SOLD_LOT_VACANT = '#4EDB4B'
+      SOLD_LOT_OCCUPIED= '#2686BC'
+      SOLD_LOT_CONSUMED = '#E95252'
+      MONTHLY_AMORTIZATION = '#DBCD4B'
+      TRANSFERRED_LOT_VACANT = '#1DB535'
+      TRANSFERRED_LOT_OCCUPIED = '#D84BDB'
+      TRANSFERRED_LOT_CONSUMED =  '#36A1DD'
+   
    SOLD_LOT_VACANT = 'Sold Lot (Vacant)'
    SOLD_LOT_OCCUPIED = 'Sold Lot (Occupied)'
    SOLD_LOT_CONSUMED = 'Sold Lot (Consumed)'
@@ -17,6 +26,21 @@ class LOT():
       TRANSFERRED_LOT_OCCUPIED,
       TRANSFERRED_LOT_CONSUMED)
 
+   NUM_OF_PHASES = 2
+
+   class PHASE_1():
+      NUM_OF_LAWNS = 5
+      LAWN_1_NUM_OF_LOTS = 179
+      LAWN_2_NUM_OF_LOTS = 782
+      LAWN_3_NUM_OF_LOTS = 400
+      LAWN_4_NUM_OF_LOTS = 631
+      LAWN_5_NUM_OF_LOTS = 400
+
+   class PHASE_2():
+      NUM_OF_LAWNS = 3
+      LAWN_1_NUM_OF_LOTS = 250
+      LAWN_2_NUM_OF_LOTS = 100
+      LAWN_3_NUM_OF_LOTS = 500 
 
    PROMOS = [
       {  "TYPE": "STANDARD",

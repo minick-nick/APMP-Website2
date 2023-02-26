@@ -30,8 +30,6 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/general.css') }}"
     />
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
   </head>
   <body>
     <!-- Navbar -->
@@ -76,7 +74,7 @@
               <a class="nav-link" href="{{ url_for('services')}}">Services</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('events')}}">Events</a>
+              <a class="nav-link" href="{{ url_for('events')}}">News</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('contact_us')}}"
@@ -121,7 +119,7 @@
                 </div>
               </div>
               <div class="contact-platform">
-                <a href=""><img src="{{ url_for('static', filename='images/icon/facebook.png')}}" alt="Facebook logo"></a>
+                <a href="https://www.facebook.com/apostlepaulmemorialpark" target="_blank"><img src="{{ url_for('static', filename='images/icon/facebook.png')}}" alt="Facebook logo"></a>
                 <a href=""><img src="{{ url_for('static', filename='images/icon/gmail.png')}}" alt="Gmail logo"></a>
                 <a href=""><img src="{{ url_for('static', filename='images/icon/yahoo.png')}}" alt="Yahoo logo"></a>
               </div>
@@ -162,6 +160,9 @@
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Fontawesome CDN link -->
+    <script src="https://kit.fontawesome.com/2da2407b7e.js" crossorigin="anonymous"></script>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
   </body>

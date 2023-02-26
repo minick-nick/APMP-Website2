@@ -1,66 +1,80 @@
-{% extends 'admin/base.html' %}
-{% block content %}
+{% extends 'admin/base.html' %} {% block content %}
 
-<div class="row">
-    <div class="col-md-12 grid-margin">
-      <div class="d-flex justify-content-between align-items-center">
-        <div>
-          <h4 class="font-weight-bold mb-0">APMP Map</h4>
-        </div>
+
+<div class="overflow-scroll" style="height: 85vh;">
+  <div class="container" style="height: 100vh; width: auto  ;">
+    <div style="border: 1px solid black; width: 367px; padding: 10px;">
+
+      {% set br = [131, 136, 140, 144, 148, 152, 155, 158, 161, 164, 167, 170, 173, 176] %} 
+      {% set lab = 'white' %}
+
+
+      {% for id, lot_num, status in lots %}
+
+            {% if id != None %}
+                  {% if status == STATUS.MONTHLY_AMORTIZATION %}
+                    {% set lab = LABEL.MONTHLY_AMORTIZATION %}
+                
+                  {% elif status == STATUS.SOLD_LOT_VACANT %}
+                    {% set lab = LABEL.SOLD_LOT_VACANT %}
+  
+                  {% elif status == STATUS.SOLD_LOT_OCCUPIED %}
+                    {% set lab = LABEL.SOLD_LOT_OCCUPIED %}
+
+                  {% elif status == STATUS.SOLD_LOT_CONSUMED %}
+                    {% set lab = LABEL.SOLD_LOT_CONSUMED %}
+                  
+                  {% elif status == STATUS.TRANSFERRED_LOT_VACANT %}
+                    {% set lab = LABEL.TRANSFERRED_LOT_VACANT %}
+                  
+                  {% elif status == STATUS.TRANSFERRED_LOT_OCCUPIED %}
+                    {% set lab = LABEL.TRANSFERRED_LOT_OCCUPIED %} 
+                    
+                  {% elif status == STATUS.TRANSFERRED_LOT_CONSUMED %}
+                    {% set lab = LABEL.TRANSFERRED_LOT_CONSUMED%}
+                  {% endif %}
+            {% endif %}
+
+            <div
+              class="card"
+              style="display: inline-block; width: 50px; height: 50px; margin: 2px; background-color: {{lab}};"
+              data-bs-toggle="modal" data-bs-target="#show-lot-info-{{id}}"
+            >
+              <div class="d-flex justify-content-center my-3">{{lot_num}}</div>
+            </div>
+            {% if lot_num in br %}
+              <br>
+            {% endif %}
+      {% endfor %}
+    </div>
+      <!-- Button trigger modal -->
+</div>
+
+{% for all_all_lot in all_all_lots %}
+<!-- Modal -->
+<div class="modal fade" id="show-lot-info-{{all_all_lot.lot_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{all_all_lot.phase_number}}-{{all_all_lot.lawn_number}}-{{all_all_lot.lot_number}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span style="font-size: 17px; font-weight: 600;">Owner:</span> 
+        {{all_all_lot.client.first_name}} {{all_all_lot.client.last_name}} <br>
+        <span style="font-size: 17px; font-weight: 600;">Lot type:</span> 
+        {{all_all_lot.lot_type}} <br>
+        <span style="font-size: 17px; font-weight: 600;">Lot status:</span> 
+        {{all_all_lot.status}}
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-3 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-title text-md-center text-xl-left">Sales</p>
-          <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">34040</h3>
-            <i class="ti-calendar icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
-          </div>  
-          <p class="mb-0 mt-2 text-danger">0.12% <span class="text-black ms-1"><small>(30 days)</small></span></p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-title text-md-center text-xl-left">Revenue</p>
-          <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">47033</h3>
-            <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
-          </div>  
-          <p class="mb-0 mt-2 text-danger">0.47% <span class="text-black ms-1"><small>(30 days)</small></span></p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-title text-md-center text-xl-left">Downloads</p>
-          <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">40016</h3>
-            <i class="ti-agenda icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
-          </div>  
-          <p class="mb-0 mt-2 text-success">64.00%<span class="text-black ms-1"><small>(30 days)</small></span></p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-title text-md-center text-xl-left">Returns</p>
-          <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-            <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">61344</h3>
-            <i class="ti-layers-alt icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
-          </div>  
-          <p class="mb-0 mt-2 text-success">23.00%<span class="text-black ms-1"><small>(30 days)</small></span></p>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-    
+</div>
+{% endfor %}
+</div>    
 {% endblock %}
