@@ -14,7 +14,7 @@
             showMessageDate: false,
             initPayload: '/starter_msg',
             customData: { language: "en" },
-            socketUrl: "http://localhost:5005",
+            socketUrl: "https://rasa-minicknick.cloud.okteto.net/",
           },
           null
         );
