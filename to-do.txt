@@ -1,0 +1,16 @@
+* Connect read more button in home page
+ok - Fix the paragraphs in the about page
+* Fix navbar
+* Create tooltip for some icons in visitor page
+* Enable the forgot password in the login page
+* Enable login using google account
+* Make a function that can count the number of site visitors per day or per month
+* Select proper icon for each item in dashboard
+* Enable the filter button and search bar in clients section in admin page
+* Enable the filter and search bar in queries section in admin page
+* Continue develpoing the map section in admin page
+* Create the map section in client page
+* Create the notifcation part of the admin and client page
+* Create the setting and profile part of the admin and client page
+* Remove the message button and tranfer delete and edit button inside view client and make it enable
+* Create a digital receipt for the payment of client on their monthly amortization

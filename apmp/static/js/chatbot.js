@@ -12,9 +12,10 @@
             profileAvatar: "./static/images/icon/chatbot.png",
             subtitle: 'Apostle Paul Memorial Park Chatbot',
             showMessageDate: false,
-            initPayload: '/starter_msg',
+            initPayload: '/welcome_msg',
             customData: { language: "en" },
-            socketUrl: "https://rasa-minicknick.cloud.okteto.net/",
+            //"https://rasa-minicknick.cloud.okteto.net/"
+            socketUrl: "http://localhost:8080",
           },
           null
         );

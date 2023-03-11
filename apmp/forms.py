@@ -6,15 +6,15 @@ from apmp import CONSTANTS
 from apmp.db_helper import get_lots, get_downpayment_promos
 import datetime
 
-class LoginFormClient(FlaskForm):
+"""class LoginFormClient(FlaskForm):
     client_id = StringField(label='Client ID', validators=[DataRequired()])
     password = PasswordField(label='Password', validators=[DataRequired()])
-    submit = SubmitField(label='Log In')
+    submit = SubmitField(label='Log In')"""
 
-class LoginFormAdmin(FlaskForm):
-    username= StringField(label='Username', validators=[DataRequired()])
+class LoginForm(FlaskForm):
+    username_or_client_id= StringField(label='Username or client ID', validators=[DataRequired()])
     password = PasswordField(label='Password', validators=[DataRequired()])
-    submit = SubmitField(label='Log In')
+    submit = SubmitField(label='Sign in')
 
 class AddClientForm(FlaskForm):
     # for personal information of client
@@ -71,35 +71,60 @@ class AddClientForm(FlaskForm):
     def validate_lot_number(self, lot_number):
         if int(self.phase_number.data) == 1:
             if self.lawn_number.data == 1:
-                if lot_number.data in [lot_num for id, lot_num, status in get_lots(1, 1, False)]:
+                if (self.lot_number.data < 1) or (self.lot_number.data > CONSTANTS.LOT.PHASE_1.LAWN_1_NUM_OF_LOTS):
+                    raise ValidationError(f"There is no lot number {lot_number.data} in lawn 1 at phase 1")
+                
+                elif lot_number.data in [lot_num for id, lot_num, status in get_lots(1, 1, False)]:
                     raise ValidationError(f"Lot {lot_number.data} is not vailable in lawn 1 at phase 1")
+                
             if self.lawn_number.data == 2:
-                if lot_number.data in [lot_num for id, lot_num, status in get_lots(1, 2, False)]:
+                if (self.lot_number.data < 1) or (self.lot_number.data > CONSTANTS.LOT.PHASE_1.LAWN_2_NUM_OF_LOTS):
+                    raise ValidationError(f"There is no lot number {lot_number.data} in lawn 2 at phase 1")
+                
+                elif lot_number.data in [lot_num for id, lot_num, status in get_lots(1, 2, False)]:
                     raise ValidationError(f"Lot {lot_number.data} is not vailable in lawn 2 at phase 1")
                 
             if self.lawn_number.data == 3:
-                if lot_number.data in [lot_num for id, lot_num, status in get_lots(1, 3, False)]:
+                if (self.lot_number.data < 1) or (self.lot_number.data > CONSTANTS.LOT.PHASE_1.LAWN_3_NUM_OF_LOTS):
+                    raise ValidationError(f"There is no lot number {lot_number.data} in lawn 3 at phase 1")
+                 
+                elif lot_number.data in [lot_num for id, lot_num, status in get_lots(1, 3, False)]:
                     raise ValidationError(f"Lot {lot_number.data} is not vailable in lawn 3 at phase 1")
 
             if self.lawn_number.data == 4:
-                if lot_number.data in [lot_num for id, lot_num, status in get_lots(1, 4, False)]:
+                if (self.lot_number.data < 1) or (self.lot_number.data > CONSTANTS.LOT.PHASE_1.LAWN_4_NUM_OF_LOTS):
+                    raise ValidationError(f"There is no lot number {lot_number.data} in lawn 4 at phase 1")
+                 
+                elif lot_number.data in [lot_num for id, lot_num, status in get_lots(1, 4, False)]:
                     raise ValidationError(f"Lot {lot_number.data} is not vailable in lawn 4 at phase 1")
                 
             if self.lawn_number.data == 5:
-                if lot_number.data in [lot_num for id, lot_num, status in get_lots(1, 5, False)]:
+                if (self.lot_number.data < 1) or (self.lot_number.data > CONSTANTS.LOT.PHASE_1.LAWN_5_NUM_OF_LOTS):
+                    raise ValidationError(f"There is no lot number {lot_number.data} in lawn 5 at phase 1") 
+
+                elif lot_number.data in [lot_num for id, lot_num, status in get_lots(1, 5, False)]:
                     raise ValidationError(f"Lot {lot_number.data} is not vailable in lawn 5 at phase 1")
         
         elif int(self.phase_number.data) == 2:
             if self.lawn_number.data == 1:
-                if lot_number.data in [lot_num for id, lot_num, status in get_lots(2, 1, False)]:
+                if (self.lot_number.data < 1) or (self.lot_number.data > CONSTANTS.LOT.PHASE_2.LAWN_1_NUM_OF_LOTS):
+                    raise ValidationError(f"There is no lot number {lot_number.data} in lawn 1 at phase 2") 
+                
+                elif lot_number.data in [lot_num for id, lot_num, status in get_lots(2, 1, False)]:
                     raise ValidationError(f"Lot {lot_number.data} is not vailable in lawn 1 at phase 2")
                 
             if self.lawn_number.data == 2:
-                if lot_number.data in [lot_num for id, lot_num, status in get_lots(2, 2, False)]:
+                if (self.lot_number.data < 1) or (self.lot_number.data > CONSTANTS.LOT.PHASE_2.LAWN_2_NUM_OF_LOTS):
+                    raise ValidationError(f"There is no lot number {lot_number.data} in lawn 2 at phase 2") 
+
+                elif lot_number.data in [lot_num for id, lot_num, status in get_lots(2, 2, False)]:
                     raise ValidationError(f"Lot {lot_number.data} is not vailable in lawn 2 at phase 2")
                 
             if self.lawn_number.data == 3:
-                if lot_number.data in [lot_num for id, lot_num, status in get_lots(2, 3, False)]:
+                if (self.lot_number.data < 1) or (self.lot_number.data > CONSTANTS.LOT.PHASE_2.LAWN_3_NUM_OF_LOTS):
+                    raise ValidationError(f"There is no lot number {lot_number.data} in lawn 3 at phase 2")
+
+                elif lot_number.data in [lot_num for id, lot_num, status in get_lots(2, 3, False)]:
                     raise ValidationError(f"Lot {lot_number.data} is not vailable in lawn 3 at phase 2")
 
 
@@ -227,5 +252,13 @@ class AddClientLotForm(FlaskForm):
     def validate_phase_number(self, phase_number):
         if int(phase_number.data) < 1 or int(phase_number.data) > 2:
             raise ValidationError("Invalid phase number. Pleaese select phase number between 1 and 2 only.")
+        
+
+class SendEmailForm(FlaskForm):
+    recepient = EmailField(label='To:', validators=[DataRequired(), Email()])
+    subject = StringField(label='Subject:', validators=[DataRequired()])
+    message = TextAreaField(label='Message:', validators=[DataRequired()])
+    send = SubmitField('Send')
+
 
             

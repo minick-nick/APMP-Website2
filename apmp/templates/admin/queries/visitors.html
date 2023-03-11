@@ -1,19 +1,26 @@
-{% extends 'admin/base.html' %}
-{% block content %}
+{% extends 'admin/base.html' %} {% block content %}
 
 <div class="row mb-4">
   <div class="d-flex flex-row">
     <div>
-      <input type="date" class="form-control">
+      <input type="date" class="form-control" />
     </div>
     <div class="ms-auto">
-      <div class="input-group" style="width:300px">
+      <div class="input-group" style="width: 300px">
         <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
-          <span class="input-group-text" style="height: 38px;"  id="search">
+          <span class="input-group-text" style="height: 38px" id="search">
             <i class="ti-search"></i>
           </span>
         </div>
-        <input type="text" class="form-control" style="height: 41.8px;" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+        <input
+          type="text"
+          class="form-control"
+          style="height: 41.8px"
+          id="navbar-search-input"
+          placeholder="Search now"
+          aria-label="search"
+          aria-describedby="search"
+        />
       </div>
     </div>
   </div>
@@ -26,52 +33,157 @@
         <h4 class="card-title">VISITORS QUERIES</h4>
         <div class="table-responsive">
           <table class="table table-striped">
-            <thead>
-            </thead>
-              <tbody>
+            <thead></thead>
+            <tbody>
               {% for visitor_msg in visitors_msgs %}
-                <tr>
-                  <td class="py-1">
-                    {{ visitor_msg.message_id }}
-                  </td>
-                  <td>
-                    <div class="d-flex flex-column">
-                      <h4>
-                        {{ visitor_msg.name }}
-                      </h4>
-                      <a href="">{{ visitor_msg.email }}</a>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex flex-row justify-content-end align-items-center">
+              <tr>
+                <td class="py-1">{{ visitor_msg.message_id }}</td>
+                <td>
+                  <div class="d-flex flex-column">
+                    <span class="mb-2">{{visitor_msg.date_received}}</span>
+                    <h4>{{ visitor_msg.name }}</h4>
+                    <a href="">{{ visitor_msg.email }}</a>
+                    <span> </span>
+                  </div>
+                </td>
+                <td>
+                  <div
+                    class="d-flex flex-row justify-content-end align-items-start"
+                  >
+
+
+                    {% if visitor_msg.replied %}
+                      <div
+                        style="
+                          background-color: chartreuse;
+                          margin-right: 20px;
+                          font-weight: 500;
+                          font-size: 10px;
+                          padding: 7px;
+                          border-radius: 5px;
+                        " >
+                      Replied
+                      </div>
+                    {% endif %}
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-dark btn-icon-text me-4" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ visitor_msg.message_id }}">
+                    <button
+                      type="button"
+                      class="btn btn-dark btn-icon-text me-4"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal-{{ visitor_msg.message_id }}"
+                    >
                       See message
-                      <i class="ti-comment btn-icon-append"></i>  
+                      <i class="ti-comment btn-icon-append"></i>
                     </button>
-                    {{ visitor_msg.date_received }}
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Modal for viewing each message -->
+              <div
+                class="modal fade"
+                id="exampleModal-{{ visitor_msg.message_id }}"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Message
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
                     </div>
-                  </td>
-                </tr>
-                
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal-{{ visitor_msg.message_id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Message</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        {{  visitor_msg.message }}
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Reply via email</button>
-                      </div>
+                    <div class="modal-body">{{ visitor_msg.message }}</div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#send-email-{{visitor_msg.message_id}}"
+                      >
+                        Reply via email
+                      </button>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <!-- Modal for sending email -->
+              <div
+                class="modal fade"
+                id="send-email-{{visitor_msg.message_id}}"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <form method="POST">
+                      {{send_email_form.hidden_tag()}}
+
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                          <!-- Send email -->
+                        </h1>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="mb-3">
+                          {{send_email_form.recepient.label()}}
+                          {{send_email_form.recepient(class="form-control",
+                          value=visitor_msg.email)}}
+                        </div>
+
+                        <div class="mb-3">
+                          {% set sub_desc = visitor_msg.message|string %} {% set
+                          sub_desc_len = sub_desc|length %} {% if sub_desc_len
+                          >= 35 %} {% set sub_desc = sub_desc[:36] + '...' %} {%
+                          endif %} {% set sub_id = ' - (#' +
+                          visitor_msg.message_id|string + ')' %} {% set sub =
+                          '[APMP Queries] ' + sub_desc + sub_id %}
+                          {{send_email_form.subject.label()}}
+                          {{send_email_form.subject(class="form-control",
+                          value=sub)}}
+                        </div>
+
+                        <div class="mb-3">
+                          {{send_email_form.message.label()}}
+                          {{send_email_form.message(class="form-control")}}
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        {{send_email_form.send(class="btn btn-success")}}
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
               {% endfor %}
             </tbody>
           </table>
@@ -80,6 +192,4 @@
     </div>
   </div>
 </div>
-
 {% endblock %}
-

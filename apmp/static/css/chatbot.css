@@ -1,13 +1,13 @@
 /* Chatbot */
 .rw-conversation-container .rw-header,
 .rw-conversation-container .rw-messages-container .rw-message .rw-client {
-    background-color: #198754;
+    background-color: #10b6ad;
 }
 
 .rw-launcher {
-    background-color: #198754;
+    background-color: #10b6ad;
 }
 
 .rw-conversation-container .rw-sender .rw-send {
-    color: #198754;
+    color: #10b6ad;
 }

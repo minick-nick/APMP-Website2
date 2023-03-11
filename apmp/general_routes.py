@@ -1,14 +1,13 @@
 from apmp import app, db
-from apmp.models import LotPromo, NewsContent, login_manager
-from flask import render_template, redirect, url_for, request
-from flask_login import logout_user
-from apmp.forms import MessageForm
+from apmp.models import LotPromo, NewsContent, Admin, Client, login_manager
+from flask import render_template, redirect, url_for, request, flash
+from flask_login import login_user, logout_user
+from apmp.forms import LoginForm, MessageForm
 from apmp.db_helper import push_visitor_message
 from markdown import markdown
-from apmp.util import modify_html_code
+from apmp.util import modify_html_code, is_client_number
 
 @app.route('/',  methods=['GET', 'POST'])
-@app.route('/home', methods=['GET', 'POST'])
 def home():
     msgForm = MessageForm()
 
@@ -95,6 +94,48 @@ def interest_pro():
             return redirect(url_for('home'))
 
     return render_template('interest_promo.html', msgForm=msgForm, PROMOS = PROMOS)
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    loginForm = LoginForm()
+    
+    if request.method == 'POST':
+        if loginForm.validate_on_submit:
+            key = loginForm.username_or_client_id.data
+            password = loginForm.password.data
+
+            key = key.replace('-', '')
+            
+            if is_client_number(key):
+                
+                attempted_client = Client.query.filter_by(client_id=key).first()
+
+                if attempted_client:
+                    if attempted_client and attempted_client.check_password_correction(password):
+                        login_user(attempted_client)
+                        return redirect(url_for('client'))
+                    else:
+                        flash(f'Incorrect client ID or password.', category='danger')
+                else:
+                    flash(f'The client ID you entered isn’t connected to an account.', category='warning')
+
+
+            else:      
+                attempted_admin = Admin.query.filter_by(username=key).first()
+
+                if attempted_admin:
+                    if attempted_admin and attempted_admin.check_password_correction(password):
+                        login_user(attempted_admin)
+                        return redirect(url_for('admin'))
+                    else:
+                        flash(f'Incorrect username or password.', category='danger')
+                else:
+                    flash(f'The username you entered isn’t connected to an account.', category='warning')
+
+    return render_template('sign_in.html', loginForm=loginForm)
+
 
 @app.route('/logout')
 def logout():

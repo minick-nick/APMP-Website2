@@ -34,7 +34,8 @@ body {
 
 main {
     margin-top: 72px;
-    padding: 0;    
+    padding: 0;
+    color: #413a3a;    
 }
 
 footer {
@@ -102,6 +103,3 @@ footer {
 .message div {
     margin-bottom: 7px;
 }
-
-
-

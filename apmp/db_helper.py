@@ -12,6 +12,7 @@ def push_visitor_message(msg_form):
     v_msg.email = msg_form.email.data
     v_msg.mobile_number = msg_form.contact_number.data
     v_msg.message = msg_form.message.data
+    v_msg.replied = False
 
     try:
         db.session.add(v_msg)
@@ -24,8 +25,8 @@ def get_downpayment_promos(is_spot_cash):
     
     selected_promo_list = list()
 
-    with app.app_context():
-        if table_exists(LotPromo.__tablename__):           
+    if table_exists(LotPromo.__tablename__):
+        with app.app_context():       
             promo_list = LotPromo.query.filter_by(is_spot_cash=is_spot_cash)
 
             for x in promo_list:
@@ -33,9 +34,9 @@ def get_downpayment_promos(is_spot_cash):
                 type = x.type
                 label = x.label
                 selected_promo_list.append((id, f'{type} - {label}'))
-                return selected_promo_list
-    return [None, None]
-
+    
+        return selected_promo_list
+            
 
 def table_exists(name):
     engine = sa.create_engine(connection_uri)
@@ -53,6 +54,7 @@ def get_lots(phase_num, lawn_num, available):
             return [[id, lot_num, status] for id, lot_num, status in id_lot_num if id == None]
         else:
             return [[id, lot_num, status] for id, lot_num, status in id_lot_num if id != None]
+
 
 def get_all_lots(phase_num, lawn_num):
     x = AvailableAndNotAvailbaleLots.query.filter_by(phase_num=phase_num, lawn_num=lawn_num).first()

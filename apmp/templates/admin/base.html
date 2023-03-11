@@ -131,16 +131,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#quer" aria-expanded="false" aria-controls="quer">
+            <a class="nav-link" href="{{ url_for('visitors_queries') }}">
               <i class="ti-help-alt menu-icon"></i>
               <span class="menu-title">Queries</span>
-              <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="quer">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href=""> Clients </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ url_for('visitors_queries') }}"> Visitors </a></li>
-            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('map') }}">
@@ -186,6 +180,10 @@
       
         <!-- partial -->
       </div>
+
+      <!-- Map legend -->
+
+
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
@@ -208,6 +206,5 @@
   <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script> 
   <!-- End custom js for this page-->
 </body>
-
 </html>
 

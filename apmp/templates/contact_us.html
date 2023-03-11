@@ -4,14 +4,14 @@ content %}
 <div class="position-relative">
   <img
     id="image"
-    src="{{ url_for('static', filename='images/apmp-gate.jpg') }}"
+    src="{{ url_for('static', filename='images/apmp-side-gate.jpg') }}"
     alt=""
     style="width: 100%; height: 750px; object-fit: cover"
   />
 
   <div class="position-absolute top-0 start-0" style="width: 100%">
     <div style="background-color: rgba(0, 0, 0, 0.563); height: 750px"></div>
-  </div>
+  </div>  
 
   <div class="position-absolute top-50 start-50 translate-middle">
     <div class="d-flex flex-column">
@@ -94,7 +94,7 @@ content %}
               src="{{ url_for('static', filename='images/icon/phone.png')}}"
               alt="Phone logo"
           /></a>
-          <span style="font-weight: 600;">091-2423-4234 (Globe)</span>
+          <span style="font-weight: 600;">0938-757-7387</span>
         </li>
         <li>
           <a href=""
@@ -103,7 +103,7 @@ content %}
               src="{{ url_for('static', filename='images/icon/phone.png')}}"
               alt="Phone logo"
           /></a>
-          <span style="font-weight: 600;">091-2423-4234 (Smart)</span>
+          <span style="font-weight: 600;">0948-111-6998</span>
         </li>
         <li>
           <a href=""
@@ -112,7 +112,7 @@ content %}
               src="{{ url_for('static', filename='images/icon/phone.png')}}"
               alt="Phone logo"
           /></a>
-          <span style="font-weight: 600;">091-2423-4234 (Dito)</span>
+          <span style="font-weight: 600;">0917-816-4968</span>
         </li>
       </ul>
     </div>
@@ -133,13 +133,14 @@ content %}
   </div>
 </div>
 
+
 <script>
   var image = document.getElementById("image");
   var currentImageIndex = 1;
 
   setInterval(function () {
     currentImageIndex++;
-    if (currentImageIndex > 3) {
+    if (currentImageIndex > 7) {
       currentImageIndex = 1;
     }
 
@@ -147,14 +148,26 @@ content %}
 
     switch (currentImageIndex) {
       case 1:
-        image_path = "{{ url_for('static', filename='images/apmp-gate.jpg') }}";
+        image_path = "{{ url_for('static', filename='images/apmp-side-gate.jpg') }}";
         break;
       case 2:
-        image_path = "{{ url_for('static', filename='images/image2.jpg') }}";
+        image_path = "{{ url_for('static', filename='images/inside-apmp1.jpg') }}";
         break;
       case 3:
-        image_path = "{{ url_for('static', filename='images/image3.jpg') }}";
+        image_path = "{{ url_for('static', filename='images/inside-apmp2.jpg') }}";
         break;
+      case 4:
+        image_path = "{{ url_for('static', filename='images/inside-apmp3.jpg') }}";
+        break;
+      case 5:
+        image_path = "{{ url_for('static', filename='images/inside-apmp4.jpg') }}";
+        break;
+      case 6:
+        image_path = "{{ url_for('static', filename='images/inside-apmp5.jpg') }}";
+        break;
+      case 7:
+        image_path = "{{ url_for('static', filename='images/inside-apmp6.jpg') }}";
+        break;  
     }
 
     image.src = image_path;

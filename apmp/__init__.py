@@ -5,20 +5,29 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 import sqlalchemy as sa
 from apmp.CONSTANTS import LOT
+from flask_mail import Mail
 
 app = Flask(__name__)
-app.app_context().push()
 
-#connection_uri = 'postgresql://postgres:password@localhost/apmp_db'
+connection_uri = 'postgresql://postgres:password@localhost/apmp_db'
 # For internal connection in render.com
 # postgres://apmp_db_test_user:A2KtDznZHpGFHiu57JmIH8O5SLPSkDpg@dpg-cftma4h4reb6ks0r32ng-a/apmp_db_test
 
 # for external connection
 #postgresql://apmp_db_test_user:A2KtDznZHpGFHiu57JmIH8O5SLPSkDpg@dpg-cftma4h4reb6ks0r32ng-a.singapore-postgres.render.com/apmp_db_test
 
-connection_uri = 'postgresql://apmp_db_test_user:A2KtDznZHpGFHiu57JmIH8O5SLPSkDpg@dpg-cftma4h4reb6ks0r32ng-a/apmp_db_test'
+#connection_uri = 'postgresql://apmp_db_test_user:A2KtDznZHpGFHiu57JmIH8O5SLPSkDpg@dpg-cftma4h4reb6ks0r32ng-a/apmp_db_test'
 app.config['SECRET_KEY'] = 'sdfsdfsdfsdfsdfsdfsdfsd' # This secret key should be random. Change this later.
 app.config['SQLALCHEMY_DATABASE_URI'] = connection_uri
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'dominicdofredo16@gmail.com'
+app.config['MAIL_PASSWORD'] = 'gzyomqqrpnadsebl'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -26,6 +35,9 @@ login_manager = LoginManager(app)
 
 engine = sa.create_engine(connection_uri)
 insp = sa.inspect(engine)
+
+
+app.app_context().push()
 
 
 def db_c(flag):

@@ -1,5 +1,6 @@
 from datetime import datetime
 import pytz
+from sqlalchemy import Identity
 from apmp import db, bcrypt, login_manager
 from sqlalchemy.schema import Sequence
 from flask_login import UserMixin
@@ -8,12 +9,12 @@ now = datetime.now(pytz.timezone('Asia/Singapore'))
 
 
 @login_manager.user_loader
-def load_user(user_id):
-    if isinstance(user_id, int):
-        login_manager.login_view = 'login_client'
+def load_user(user_id):    
+    login_manager.login_view = 'login'
+    
+    if str(user_id).isnumeric():
         return Client.query.get(user_id)
     
-    login_manager.login_view = 'login_admin'
     return Admin.query.get(user_id)
 
 class Admin(db.Model, UserMixin):

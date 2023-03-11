@@ -1,36 +1,15 @@
-from apmp import CONSTANTS, app, db
+from apmp import CONSTANTS, app, db, mail
 from apmp.models import Client, Admin, Lot, VisitorMessage, LotPromo, NewsContent, LotPurchaseDetail, MonthlyAmortization, PaymentHistory, AvailableAndNotAvailbaleLots, login_manager
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required
-from apmp.forms import  LoginFormAdmin, AddClientForm, LotPromoForm, LotPromoForm,NewsContentForm, SearchClientForm, PayMonthlyAmortizationForm, AddClientLotForm
+from apmp.forms import AddClientForm, LotPromoForm, LotPromoForm,NewsContentForm, SearchClientForm, PayMonthlyAmortizationForm, AddClientLotForm, SendEmailForm
 from markdown import markdown
-from apmp.util import modify_html_code, generate_payment_schedule, con_receipt_to_image
+from apmp.util import modify_html_code, generate_payment_schedule, con_receipt_to_image, generate_client_id
 from apmp.util import Dashboard
 from datetime import datetime
 import json
 from apmp.db_helper import make_lot_unavail, get_lots, get_all_lots
-
-
-@app.route('/login_admin', methods=['GET', 'POST'])
-def login_admin():
-    loginFormAdmin = LoginFormAdmin()
-    
-    if request.method == 'POST':
-        if loginFormAdmin.validate_on_submit:
-            username = loginFormAdmin.username.data
-            password = loginFormAdmin.password.data
-
-            attempted_admin = Admin.query.filter_by(username=username).first()
-
-            if attempted_admin:
-                if attempted_admin and attempted_admin.check_password_correction(password):
-                    login_user(attempted_admin)
-                    return redirect(url_for('admin'))
-                else:
-                    flash(f'Incorrect username or password.', category='danger')
-            else:
-                flash(f'The username you entered isn’t connected to an account.', category='warning')
-    return render_template('login/admin.html', loginFormAdmin=loginFormAdmin)
+from flask_mail import Message
 
 @app.route('/admin')
 @app.route('/admin/dashboard')
@@ -72,15 +51,40 @@ def clients():
 
     return render_template('admin/clients.html', clients=clients, search_bar=search_bar)
 
-@app.route('/admin/queries/visitors')
+@app.route('/admin/queries/visitors', methods=['GET', 'POST'])
 @login_required
 def visitors_queries():
+    send_email_form = SendEmailForm()
+
+    if request.method == 'POST':
+        if send_email_form.validate_on_submit:
+            r = send_email_form.recepient.data
+            s = send_email_form.subject.data
+            msg = send_email_form.message.data
+
+            sender = 'dominicdofredo16@gmail.com'
+            message = Message(sender=sender, recipients=[r], subject=s)
+            message.body = msg
+            mail.send(message)
+
+            client_msg = VisitorMessage.query.filter_by(email=r).first()
+
+            if client_msg:
+                client_msg.replied = True
+                db.session.commit()
+            
+
+            flash(f'Message sent', category='successs')
+
+
+            return redirect(url_for('visitors_queries'))
+
     visitors_msgs = VisitorMessage.query.all()
 
     for visitor_msg in visitors_msgs:
         visitor_msg.date_received = str(visitor_msg.date_received).split()[0]
 
-    return render_template('admin/queries/visitors.html', visitors_msgs=visitors_msgs)
+    return render_template('admin/queries/visitors.html', visitors_msgs=visitors_msgs, send_email_form=send_email_form)
 
 @app.route('/admin/lot_image_request')
 @login_required
@@ -90,14 +94,25 @@ def lot_image_request():
 @app.route('/admin/map')
 @login_required
 def map():
-
-    all_lots = get_all_lots(1,1)
-    all_all_lots = Lot.query.filter_by(phase_number=1, lawn_number=1)
-
     label = CONSTANTS.LOT.LABEL
     status = CONSTANTS.LOT
+
+    p1l1_lots = get_all_lots(1,1)
+    p1l2_lots = get_all_lots(1,2)
+    p1l3_lots = get_all_lots(1,3)
+    p1l4_lots = get_all_lots(1,4)
+    p1l5_lots = get_all_lots(1,5)
+
+
+    all_lots_occupied = Lot.query.all()
+ 
     
-    return render_template('admin/map.html', lots = all_lots, LABEL=label, STATUS=status, all_all_lots=all_all_lots)
+    return render_template('admin/map.html',
+                           p1l1_lots = p1l1_lots,
+                           p1l2_lots = p1l2_lots,
+                           LABEL=label,
+                           STATUS=status, 
+                           all_all_lots=all_lots_occupied)
 
 @app.route('/admin/add_client', methods=['GET', 'POST'])
 @login_required
@@ -120,6 +135,7 @@ def add_client():
             client.address = add_client_form.address.data
             client.birth_date = add_client_form.birth_date.data
             client.name_of_spouse = add_client_form.name_of_spouse.data
+            client.client_id = generate_client_id()
             client.password = add_client_form.password.data
             
             db.session.add(client)
@@ -441,7 +457,6 @@ def add_client_lot(client_id):
             flash(f'{err_msg}', category='warning')
 
     return render_template('admin/forms/add_client_lot_form.html', add_lot_form=add_client_lot_form)
-
 
 
 

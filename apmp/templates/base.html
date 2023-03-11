@@ -6,10 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>{% block title %} {% endblock %}</title>
-    
-    <link rel="icon" href="{{ url_for('static', filename='images/logo.svg') }}"
 
-    <!-- Bootstrap CDN link -->
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/logo.svg') }}"
+      <!--
+      Bootstrap
+      CDN
+      link
+      --
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -32,8 +38,16 @@
     />
   </head>
   <body>
+    <!-- Style for chabot -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/chatbot.css') }}"
+    />
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg position-fixed top-0 start-0 end-0" style="background-color: #dadada; z-index: 300">
+    <nav
+      class="navbar navbar-expand-lg position-fixed top-0 start-0 end-0"
+      style="background-color: #dadada; z-index: 300"
+    >
       <div class="container">
         <a class="navbar-brand" href="{{ url_for('about') }}">
           <img
@@ -81,72 +95,95 @@
                 >Contact Us</a
               >
             </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Log In
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="{{ url_for('login_client') }}">Client</a></li>
-                  <!-- <li><hr class="dropdown-divider"></li> -->
-                  <li><a class="dropdown-item" href="{{ url_for('login_admin') }}">Admin</a></li>
-                </ul>
-              </li>
+            <li class="nav-item">
+              <a
+                class="btn ms-auto"
+                href="{{url_for('login')}}"
+                style="background-color: #59937b; color: white"
+                >Sign In</a
+              >
+            </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <main class="container-fluid" style="padding: 0;">
+    <main class="container-fluid" style="padding: 0">
       {% block content %} {% endblock %}
     </main>
 
-    {% block footer %}
-    {% endblock %}
+    {% block footer %} {% endblock %}
 
     <footer class="container-fluid">
       <div class="container footer">
-          <div class="row gy-3">
-            <div class="col col-12 col-sm-12 col-md-5">
-              <h4>Get in touch with us</h4>
-              <div class="address-and-number">
-                <div>
-                  <a href="">
-                  <img src="{{ url_for('static', filename='images/icon/location.png') }}" alt="Location icon">San Eugenio, Aringay, La Union
-                  </a>
-                </div>
-                <div>
-                  <img src="{{ url_for('static', filename='images/icon/phone.png') }}" alt="Phone icon">Mobile Numbers: 0938.7387 | 0948.11.698 | 0916.708.1070
-                </div>
+        <div class="row gy-3">
+          <div class="col col-12 col-sm-12 col-md-5">
+            <h4>Get in touch with us</h4>
+            <div class="address-and-number">
+              <div>
+                <a href="">
+                  <img
+                    src="{{ url_for('static', filename='images/icon/location.png') }}"
+                    alt="Location icon"
+                  />San Eugenio, Aringay, La Union
+                </a>
               </div>
-              <div class="contact-platform">
-                <a href="https://www.facebook.com/apostlepaulmemorialpark" target="_blank"><img src="{{ url_for('static', filename='images/icon/facebook.png')}}" alt="Facebook logo"></a>
-                <a href=""><img src="{{ url_for('static', filename='images/icon/gmail.png')}}" alt="Gmail logo"></a>
-                <a href=""><img src="{{ url_for('static', filename='images/icon/yahoo.png')}}" alt="Yahoo logo"></a>
-              </div>
-            </div>
-            <div id="msg_form" class="col col-12 col-sm-12 col-md-7">
-   
-                {% with messages = get_flashed_messages(with_categories=True) %}
-                {% if messages %}
-                  {% for category, message in messages %}
-                      <div class="alert alert-{{category}} alert-dismissible fade show mb-1" role="alert">
-                          {{ message }}
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                      </div>
-                  {% endfor %}
-                  <div class="mb-2"></div>
-                {% endif %}
-              {% endwith %}
-       
-              <div class="container message p-4">
-                {% block message_form %}
-                {% endblock %}
+              <div>
+                <img
+                  src="{{ url_for('static', filename='images/icon/phone.png') }}"
+                  alt="Phone icon"
+                />Mobile Numbers: 0938-757-7387 | 0948-111-6998 | 0917-816-4968
               </div>
             </div>
+            <div class="contact-platform">
+              <a
+                href="https://www.facebook.com/apostlepaulmemorialpark"
+                target="_blank"
+                ><img
+                  src="{{ url_for('static', filename='images/icon/facebook.png')}}"
+                  alt="Facebook logo"
+              /></a>
+              <a href=""
+                ><img
+                  src="{{ url_for('static', filename='images/icon/gmail.png')}}"
+                  alt="Gmail logo"
+              /></a>
+              <a href=""
+                ><img
+                  src="{{ url_for('static', filename='images/icon/yahoo.png')}}"
+                  alt="Yahoo logo"
+              /></a>
+            </div>
+          </div>
+          <div id="msg_form" class="col col-12 col-sm-12 col-md-7">
+            {% with messages = get_flashed_messages(with_categories=True) %} {%
+            if messages %} {% for category, message in messages %}
+            <div
+              class="alert alert-{{category}} alert-dismissible fade show mb-1"
+              role="alert"
+            >
+              {{ message }}
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+            {% endfor %}
+            <div class="mb-2"></div>
+            {% endif %} {% endwith %}
+
+            <div class="container message p-4">
+              {% block message_form %} {% endblock %}
+            </div>
+          </div>
         </div>
       </div>
     </footer>
-    
+
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+
     <!-- JQuery CDN link -->
     <script
       src="https://code.jquery.com/jquery-3.6.3.slim.js"
@@ -162,8 +199,12 @@
     ></script>
 
     <!-- Fontawesome CDN link -->
-    <script src="https://kit.fontawesome.com/2da2407b7e.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/2da2407b7e.js"
+      crossorigin="anonymous"
+    ></script>
 
+    <!-- For chatbot -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
   </body>
 </html>

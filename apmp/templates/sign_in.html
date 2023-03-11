@@ -48,15 +48,15 @@
           <img class="apostle-logo" src="{{ url_for('static', filename='images/login-logo.png') }}" alt="Apostle logo">
         </div>
         <form method="POST" class="form-login">
-          {{ loginFormAdmin.hidden_tag() }}
+          {{ loginForm.hidden_tag() }}
           <div class="mb-3">
-            {{ loginFormAdmin.username.label() }}
-            {{ loginFormAdmin.username(class="form-control") }}
+            {{ loginForm.username_or_client_id.label() }}
+            {{ loginForm.username_or_client_id(class="form-control") }}
             <!-- <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">  -->
           </div>
           <div class="mb-3">
-            {{ loginFormAdmin.password.label() }}
-            {{ loginFormAdmin.password(class="form-control") }}
+            {{ loginForm.password.label() }}
+            {{ loginForm.password(class="form-control") }}
           </div>
           <div class="d-flex">
             <div class="form-check">
@@ -65,7 +65,7 @@
             </div>
             <a href="" class="ms-auto">Forgot password?</a>
           </div>
-            {{ loginFormAdmin.submit(class="btn btn-primary w-100 mt-4") }}
+            {{ loginForm.submit(class="btn btn-primary w-100 mt-4") }}
         </form>
       </div>
     </div>

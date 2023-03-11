@@ -1,80 +1,338 @@
 {% extends 'admin/base.html' %} {% block content %}
 
+<div class="overflow-scroll" style="height: 80vh">
+  <div style="border: 1px solid green; width: 20000px; height: 20000px; position: relative">
 
-<div class="overflow-scroll" style="height: 85vh;">
-  <div class="container" style="height: 100vh; width: auto  ;">
-    <div style="border: 1px solid black; width: 367px; padding: 10px;">
+    <!-- Phase 1 Lawn 1-->
+    <div
+      class="d-flex flex-row"
+      style="position: absolute; width: 490px; padding: 20px; z-index: 100"
+    >
+      {% set lab = 'white' %} {% set lots_con = [] %} {% for id, lot_num, status
+      in p1l1_lots %} {% if id != None %} {% if status ==
+      STATUS.MONTHLY_AMORTIZATION %} {% set lab = LABEL.MONTHLY_AMORTIZATION %}
+      {% elif status == STATUS.SOLD_LOT_VACANT %} {% set lab =
+      LABEL.SOLD_LOT_VACANT %} {% elif status == STATUS.SOLD_LOT_OCCUPIED %} {%
+      set lab = LABEL.SOLD_LOT_OCCUPIED %} {% elif status ==
+      STATUS.SOLD_LOT_CONSUMED %} {% set lab = LABEL.SOLD_LOT_CONSUMED %} {%
+      elif status == STATUS.TRANSFERRED_LOT_VACANT %} {% set lab =
+      LABEL.TRANSFERRED_LOT_VACANT %} {% elif status ==
+      STATUS.TRANSFERRED_LOT_OCCUPIED %} {% set lab =
+      LABEL.TRANSFERRED_LOT_OCCUPIED %} {% elif status ==
+      STATUS.TRANSFERRED_LOT_CONSUMED %} {% set lab =
+      LABEL.TRANSFERRED_LOT_CONSUMED%} {% endif %} {% endif %} {% set
+      lot_num_str = lot_num | string() %} {% set id_str = id | string() %} {%
+      set lot = '
+      <div
+        class="card"
+        id="' + lot_num_str + '"
+        style="
+          width: 70px;
+          height: 50px;
+          margin: 2px;
+          background-color: ' + lab + ';
+          z-index: 100;
+        "
+        data-bs-toggle="modal"
+        data-bs-target="#show-lot-info-' + id_str + '"
+      >
+        <div class="d-flex justify-content-center my-3">
+          ' + lot_num_str + '
+        </div>
+      </div>
+      '%} {{ lots_con.append(lot) or "" }} {% endfor %} {% set col = [(144,
+      179), (108, 143), (72, 107), (45, 71), (22, 44), (1, 21)] %} {% for start,
+      end in col %}
+      <div>
+        {% for lot_num in range(start, end + 1) %} {{lots_con[lot_num-1]|safe}}
+        {% endfor %}
+      </div>
+      {% endfor %}
 
-      {% set br = [131, 136, 140, 144, 148, 152, 155, 158, 161, 164, 167, 170, 173, 176] %} 
-      {% set lab = 'white' %}
+      <img
+        src="{{url_for('static', filename='images/map/p1l1.svg')}}"
+        alt=""
+        style="position: absolute; top: 0; left: 0; z-index: 1; margin: 0"
+      />
+    </div>
 
+    <img
+      src="{{url_for('static', filename='images/map/circle.svg')}}"
+      alt=""
+      style="width: 600px; top: 1320px; left: 350px; position: absolute"
+    />
 
-      {% for id, lot_num, status in lots %}
+    <img
+      src="{{url_for('static', filename='images/map/circle_top.svg')}}"
+      alt=""
+      style="width: 520px; top: 0; left: 490px; position: absolute"
+    />
 
-            {% if id != None %}
-                  {% if status == STATUS.MONTHLY_AMORTIZATION %}
-                    {% set lab = LABEL.MONTHLY_AMORTIZATION %}
-                
-                  {% elif status == STATUS.SOLD_LOT_VACANT %}
-                    {% set lab = LABEL.SOLD_LOT_VACANT %}
-  
-                  {% elif status == STATUS.SOLD_LOT_OCCUPIED %}
-                    {% set lab = LABEL.SOLD_LOT_OCCUPIED %}
-
-                  {% elif status == STATUS.SOLD_LOT_CONSUMED %}
-                    {% set lab = LABEL.SOLD_LOT_CONSUMED %}
-                  
-                  {% elif status == STATUS.TRANSFERRED_LOT_VACANT %}
-                    {% set lab = LABEL.TRANSFERRED_LOT_VACANT %}
-                  
-                  {% elif status == STATUS.TRANSFERRED_LOT_OCCUPIED %}
-                    {% set lab = LABEL.TRANSFERRED_LOT_OCCUPIED %} 
-                    
-                  {% elif status == STATUS.TRANSFERRED_LOT_CONSUMED %}
-                    {% set lab = LABEL.TRANSFERRED_LOT_CONSUMED%}
-                  {% endif %}
-            {% endif %}
-
-            <div
-              class="card"
-              style="display: inline-block; width: 50px; height: 50px; margin: 2px; background-color: {{lab}};"
-              data-bs-toggle="modal" data-bs-target="#show-lot-info-{{id}}"
-            >
-              <div class="d-flex justify-content-center my-3">{{lot_num}}</div>
-            </div>
-            {% if lot_num in br %}
-              <br>
-            {% endif %}
+    <!-- Phase 1 Lawn 2-->
+    <div
+    class="d-flex flex-column align-items-end"
+    style="position: absolute; top: 0; left: 840px; width: 2560px; padding: 50px; z-index: 100;"
+  >
+    {% set lab = 'white' %} {% set lots_con = [] %} {% for id, lot_num, status
+    in p1l2_lots %} {% if id != None %} {% if status ==
+    STATUS.MONTHLY_AMORTIZATION %} {% set lab = LABEL.MONTHLY_AMORTIZATION %}
+    {% elif status == STATUS.SOLD_LOT_VACANT %} {% set lab =
+    LABEL.SOLD_LOT_VACANT %} {% elif status == STATUS.SOLD_LOT_OCCUPIED %} {%
+    set lab = LABEL.SOLD_LOT_OCCUPIED %} {% elif status ==
+    STATUS.SOLD_LOT_CONSUMED %} {% set lab = LABEL.SOLD_LOT_CONSUMED %} {%
+    elif status == STATUS.TRANSFERRED_LOT_VACANT %} {% set lab =
+    LABEL.TRANSFERRED_LOT_VACANT %} {% elif status ==
+    STATUS.TRANSFERRED_LOT_OCCUPIED %} {% set lab =
+    LABEL.TRANSFERRED_LOT_OCCUPIED %} {% elif status ==
+    STATUS.TRANSFERRED_LOT_CONSUMED %} {% set lab =
+    LABEL.TRANSFERRED_LOT_CONSUMED%} {% endif %} {% endif %} {% set
+    lot_num_str = lot_num | string() %} {% set id_str = id | string() %} {%
+    set lot = '
+    <div
+      class="card"
+      id="' + lot_num_str + '"
+      style="
+        width: 70px;
+        height: 50px;
+        margin: 2px;
+        background-color: ' + lab + ';
+        z-index: 100;
+      "
+      data-bs-toggle="modal"
+      data-bs-target="#show-lot-info-' + id_str + '"
+    >
+      <div class="d-flex justify-content-center my-3">
+        ' + lot_num_str + '
+      </div>
+    </div>
+    '%} {{ lots_con.append(lot) or "" }} 
+    {% endfor %} {% set col = [(728, 753), (702, 727), (676, 701), (650, 675), (624, 649), (598, 623), (572, 597),
+                                (540, 571), (508, 539), (476, 507), (444, 475), (412, 443), (380, 411), (348, 379), (316, 347), (284, 315), (252, 283), (220, 251),
+                                  (188, 219), (156, 187), (125, 155), (94, 124), (63, 93), (32, 62), (1,31)] %} 
+    
+    {% for start, end in col %}
+      {% set mar = '74px'%}
+      {% if start < 220 %}
+         {% set mar = '0' %} 
+      {% endif %}
+    <div class="d-flex flex-row" style="margin-right: {{mar}};">
+      {% for lot_num in range(start, end + 1)|reverse %} {{lots_con[lot_num-1]|safe}}
       {% endfor %}
     </div>
-      <!-- Button trigger modal -->
-</div>
+    {% endfor %}
 
-{% for all_all_lot in all_all_lots %}
-<!-- Modal -->
-<div class="modal fade" id="show-lot-info-{{all_all_lot.lot_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">{{all_all_lot.phase_number}}-{{all_all_lot.lawn_number}}-{{all_all_lot.lot_number}}</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <span style="font-size: 17px; font-weight: 600;">Owner:</span> 
-        {{all_all_lot.client.first_name}} {{all_all_lot.client.last_name}} <br>
-        <span style="font-size: 17px; font-weight: 600;">Lot type:</span> 
-        {{all_all_lot.lot_type}} <br>
-        <span style="font-size: 17px; font-weight: 600;">Lot status:</span> 
-        {{all_all_lot.status}}
+    <img
+    src="{{url_for('static', filename='images/map/p1l2.svg')}}"
+    alt=""
+    style="position: absolute; top: 0; left: 0; z-index: 1; margin: 0"
+  />
+  </div>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+  </div>
+  {% for all_all_lot in all_all_lots %}
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="show-lot-info-{{all_all_lot.lot_id}}"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            {{all_all_lot.phase_number}}-{{all_all_lot.lawn_number}}-{{all_all_lot.lot_number}}
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <span style="font-size: 17px; font-weight: 600">Owner:</span>
+          {{all_all_lot.client.first_name}} {{all_all_lot.client.last_name}}
+          <br />
+          <span style="font-size: 17px; font-weight: 600">Lot type:</span>
+          {{all_all_lot.lot_type}} <br />
+          <span style="font-size: 17px; font-weight: 600">Lot status:</span>
+          {{all_all_lot.status}}
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
       </div>
     </div>
   </div>
+  {% endfor %}
 </div>
-{% endfor %}
-</div>    
+<div
+  style="
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    z-index: 300;
+    padding: 20px;
+    background-color: rgba(93, 88, 88, 0.545);
+    border-radius: 10px;
+  "
+>
+  <div class="d-flex flex-column">
+    <div class="d-flex flex-row">
+      <div
+        style="
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background-color: {{LABEL.SOLD_LOT_VACANT}};
+      "
+      ></div>
+      <h5
+        style="
+          margin: 0;
+          padding-top: 3.5px;
+          margin-left: 18px;
+          font-size: 12px;
+        "
+      >
+        Sold Lot (Vacant)
+      </h5>
+    </div>
+
+    <div class="d-flex flex-row mt-2">
+      <div
+        style="
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background-color: {{LABEL.SOLD_LOT_OCCUPIED}};
+      "
+      ></div>
+      <h5
+        style="
+          margin: 0;
+          padding-top: 3.5px;
+          margin-left: 18px;
+          font-size: 12px;
+        "
+      >
+        Sold Lot (Occupied)
+      </h5>
+    </div>
+
+    <div class="d-flex flex-row mt-2">
+      <div
+        style="
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background-color: {{LABEL.SOLD_LOT_CONSUMED}};
+      "
+      ></div>
+      <h5
+        style="
+          margin: 0;
+          padding-top: 3.5px;
+          margin-left: 18px;
+          font-size: 12px;
+        "
+      >
+        Sold Lot (Consumed)
+      </h5>
+    </div>
+
+    <div class="d-flex flex-row mt-2">
+      <div
+        style="
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background-color: {{LABEL.MONTHLY_AMORTIZATION}};
+      "
+      ></div>
+      <h5
+        style="
+          margin: 0;
+          padding-top: 3.5px;
+          margin-left: 18px;
+          font-size: 12px;
+        "
+      >
+        Monthly Amortization
+      </h5>
+    </div>
+
+    <div class="d-flex flex-row mt-2">
+      <div
+        style="
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background-color: {{LABEL.TRANSFERRED_LOT_VACANT}};
+      "
+      ></div>
+      <h5
+        style="
+          margin: 0;
+          padding-top: 3.5px;
+          margin-left: 18px;
+          font-size: 12px;
+        "
+      >
+        Transferred Lot (Vacant)
+      </h5>
+    </div>
+
+    <div class="d-flex flex-row mt-2">
+      <div
+        style="
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background-color: {{LABEL.TRANSFERRED_LOT_OCCUPIED}};
+      "
+      ></div>
+      <h5
+        style="
+          margin: 0;
+          padding-top: 3.5px;
+          margin-left: 18px;
+          font-size: 12px;
+        "
+      >
+        Transferred Lot (Occupied)
+      </h5>
+    </div>
+
+    <div class="d-flex flex-row mt-2">
+      <div
+        style="
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background-color: {{LABEL.TRANSFERRED_LOT_CONSUMED}};
+      "
+      ></div>
+      <h5
+        style="
+          margin: 0;
+          padding-top: 3.5px;
+          margin-left: 18px;
+          font-size: 12px;
+        "
+      >
+        Transferred Lot (Consumed)
+      </h5>
+    </div>
+  </div>
+</div>
 {% endblock %}

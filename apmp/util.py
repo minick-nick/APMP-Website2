@@ -4,13 +4,14 @@ from apmp.CONSTANTS import SCHEDULE_TYPES, MONTHLY_AMORTIZATION, LOT
 from html2image import Html2Image
 from apmp.models import VisitorMessage, Lot
 from apmp import db
+import random
 
 
 def modify_html_code(html_code):
     soup = BeautifulSoup(html_code, features='html.parser')
 
     for x in soup.find_all('h3'):
-        x.attrs =  {'class': 'd-flex pt-2 pb-2 ps-4', 'style': 'background-color: #546B62; color: white;'}
+        x.attrs =  {'class': 'd-flex pt-2 pb-2 ps-4', 'style': 'background-color: #59937b; color: white;'}
 
     for x in soup.find_all('ul'):
         x.attrs = {'style': 'font-size: 16px; font-weight: 500; color: #454545', 'class': 'ms-5'}
@@ -120,4 +121,16 @@ class Dashboard():
                 self.tl_con += 1
             elif lot.status == LOT.TRANSFERRED_LOT_OCCUPIED:
                 self.tl_oc += 1
+
+
+def is_client_number(input):
+    return input.isnumeric()
+
+def generate_client_id():
+    id_str = str(random.sample(range(0, 99999999), 1))
+    id = int(id_str.replace('[', '').replace(']', ''))
+    return id
+
+    
+
 
