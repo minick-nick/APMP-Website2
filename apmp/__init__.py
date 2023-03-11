@@ -23,7 +23,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = connection_uri
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'dominicdofredo16@gmail.com'
-app.config['MAIL_PASSWORD'] = 'gzyomqqrpnadsebl'
+app.config['MAIL_PASSWORD'] = 'password'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
