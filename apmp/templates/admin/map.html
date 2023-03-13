@@ -1,15 +1,28 @@
 {% extends 'admin/base.html' %} {% block content %}
 
 <div class="overflow-scroll" style="height: 80vh">
-  <div style="border: 1px solid green; width: 20000px; height: 20000px; position: relative">
-
-    <!-- Phase 1 Lawn 1-->
+  <div
+    style="
+      border: 1px solid green;
+      width: 20000px;
+      height: 20000px;
+      position: relative;
+    "
+  >
+    <!-- Phase 1 Lawn 3-->
     <div
-      class="d-flex flex-row"
-      style="position: absolute; width: 490px; padding: 20px; z-index: 100"
+      class="d-flex flex-column align-items-end"
+      style="
+        position: absolute;
+        top: 0;
+        left: 439px;
+        width: 1500px;
+        padding: 50px;
+        z-index: 100;
+      "
     >
       {% set lab = 'white' %} {% set lots_con = [] %} {% for id, lot_num, status
-      in p1l1_lots %} {% if id != None %} {% if status ==
+      in p1l3_lots %} {% if id != None %} {% if status ==
       STATUS.MONTHLY_AMORTIZATION %} {% set lab = LABEL.MONTHLY_AMORTIZATION %}
       {% elif status == STATUS.SOLD_LOT_VACANT %} {% set lab =
       LABEL.SOLD_LOT_VACANT %} {% elif status == STATUS.SOLD_LOT_OCCUPIED %} {%
@@ -27,8 +40,9 @@
         class="card"
         id="' + lot_num_str + '"
         style="
-          width: 70px;
-          height: 50px;
+          width: 30px;
+          height: 20px;
+          font-size: 8px;
           margin: 2px;
           background-color: ' + lab + ';
           z-index: 100;
@@ -36,13 +50,196 @@
         data-bs-toggle="modal"
         data-bs-target="#show-lot-info-' + id_str + '"
       >
-        <div class="d-flex justify-content-center my-3">
+        <div class="d-flex justify-content-center my-1">
           ' + lot_num_str + '
         </div>
       </div>
-      '%} {{ lots_con.append(lot) or "" }} {% endfor %} {% set col = [(144,
-      179), (108, 143), (72, 107), (45, 71), (22, 44), (1, 21)] %} {% for start,
-      end in col %}
+      '%} {{ lots_con.append(lot) or "" }} {% endfor %} {% set col = [(1, 17),
+      (18, 34), (35, 50), (51, 66), (67, 82), (83, 98), (99, 113), (114, 128),
+      (129, 143), (144, 158), (159, 172), (173, 186), (187, 200), (201, 213),
+      (214, 226), (227, 239), (240, 251), (252, 263), (264, 275), (276, 287),
+      (288, 299), (300, 310), (311, 321), (322, 332), (333, 342), (343, 352),
+      (353, 362), (363, 372), (373, 381), (382, 390), (391, 399), (400, 407),
+      (408, 415), (416, 423), (424, 431), (432, 438), (439, 444), (445, 450),
+      (451, 456), (457, 462), (463, 468), (469, 474), (475, 480), (481, 486),
+      (487, 492), (493, 498), (499, 504), (505, 509), (510, 516), (517, 523),
+      (524, 530), (531, 538), (539, 546), (547, 554), (556, 563), (564, 572),
+      (573, 581), (582, 590), (591, 600), (601, 610), (611, 619), (620, 630),
+      (631, 640), (641, 650), (651, 661), (662, 672), (673, 683), (684, 694),
+      (695, 706), (707, 717), (719, 730), (732, 743), (745, 758) ] %} {% for
+      start, end in col %} {% set mar = '837px'%} {% if end > 438 %} {% set mar
+      = '871px' %} {% endif %} {% if end > 504 %} {% set mar = '559px'%} {% if
+      end > 706 %} {% set mar = '797px' %} {% elif end > 672 %} {% set mar =
+      '763px' %} {% elif end > 640 %} {% set mar = '729px' %} {% elif end > 610
+      %} {% set mar = '695px' %} {% elif end > 581 %} {% set mar = '661px' %} {%
+      elif end > 546 %} {% set mar = '627px' %} {% elif end > 523 %} {% set mar
+      = '593px' %}
+      <!-- 148px -->
+      {% endif%}
+
+      <div class="d-flex flex-column align-items-start" style="width: 1600px">
+        <div class="d-flex flex-row" style="margin-left: {{mar}};">
+          {% for lot_num in range(start, end + 1)|reverse %}
+          {{lots_con[lot_num-1]|safe}} {% endfor %}
+        </div>
+      </div>
+      {% else %}
+      <div class="d-flex flex-row" style="margin-right: {{mar}};">
+        {% for lot_num in range(start, end + 1)|reverse %}
+        {{lots_con[lot_num-1]|safe}} {% endfor %}
+      </div>
+      {% endif %} {% endfor %}
+
+      <img
+        src="{{url_for('static', filename='images/map/p1l3.svg')}}"
+        alt=""
+        style="position: absolute; top: 0; left: -30px; z-index: 1; margin: 0"
+      />
+
+      <h3 style="          
+      position: absolute;
+      top: 700px;
+      left: 750px;
+      z-index: 1;">
+        PHASE 1 LAWN 3
+      </h3>
+    </div>
+
+    <!-- Phase 1 Lawn 5-->
+    <div
+      class="d-flex flex-row"
+      style="
+        position: absolute;
+        top: 1880px;
+        left: 1100px;
+        width: 1000px;
+        padding: 20px;
+        z-index: 100;
+      "
+    >
+      {% set lab = 'white' %} {% set lots_con = [] %} {% for id, lot_num, status
+      in p1l5_lots %} {% if id != None %} {% if status ==
+      STATUS.MONTHLY_AMORTIZATION %} {% set lab = LABEL.MONTHLY_AMORTIZATION %}
+      {% elif status == STATUS.SOLD_LOT_VACANT %} {% set lab =
+      LABEL.SOLD_LOT_VACANT %} {% elif status == STATUS.SOLD_LOT_OCCUPIED %} {%
+      set lab = LABEL.SOLD_LOT_OCCUPIED %} {% elif status ==
+      STATUS.SOLD_LOT_CONSUMED %} {% set lab = LABEL.SOLD_LOT_CONSUMED %} {%
+      elif status == STATUS.TRANSFERRED_LOT_VACANT %} {% set lab =
+      LABEL.TRANSFERRED_LOT_VACANT %} {% elif status ==
+      STATUS.TRANSFERRED_LOT_OCCUPIED %} {% set lab =
+      LABEL.TRANSFERRED_LOT_OCCUPIED %} {% elif status ==
+      STATUS.TRANSFERRED_LOT_CONSUMED %} {% set lab =
+      LABEL.TRANSFERRED_LOT_CONSUMED%} {% endif %} {% endif %} {% set
+      lot_num_str = lot_num | string() %} {% set id_str = id | string() %} {%
+      set lot = '
+      <div
+        class="card"
+        id="' + lot_num_str + '"
+        style="
+          width: 30px;
+          height: 20px;
+          font-size: 8px;
+          margin: 2px;
+          background-color: ' + lab + ';
+          z-index: 100;
+        "
+        data-bs-toggle="modal"
+        data-bs-target="#show-lot-info-' + id_str + '"
+      >
+        <div class="d-flex justify-content-center my-1">
+          ' + lot_num_str + '
+        </div>
+      </div>
+      '%} {{ lots_con.append(lot) or "" }} {% endfor %} {% set col = [ (1,3),
+      (4, 9), (10, 18), (19, 30), (31, 45), (46, 64), (65, 86), (87, 111), (112,
+      139), (140, 171), (172, 206), (207, 244), (245, 285), (286, 330), (331,
+      375), (376, 420), (421, 461), (462, 495), (496, 521), (522, 540), (541,
+      557), (558, 571), (572, 582), (583, 590), (597, 602), (603, 605)] %} {%
+      for start, end in col %} {% set mar = '0'%} {% if end > 602 %} {% set mar
+      = '924px' %} {% elif end > 590 %} {% set mar = '858px' %} {% elif end >
+      582 %} {% set mar = '814px' %} {% elif end > 571 %} {% set mar = '748px'
+      %} {% elif end > 557 %} {% set mar = '682px' %} {% elif end > 540 %} {%
+      set mar = '616px' %} {% elif end > 521 %} {% set mar = '572px' %} {% elif
+      end > 495 %} {% set mar = '418px' %} {% elif end > 461 %} {% set mar =
+      '242px' %} {% elif end > 420 %} {% set mar = '88px' %} {% endif %}
+
+      <div style="margin-top: {{mar}};">
+        {% for lot_num in range(start, end + 1) %} {{lots_con[lot_num-1]|safe}}
+        {% endfor %}
+      </div>
+      {% endfor %}
+
+      <img
+        src="{{url_for('static', filename='images/map/p1l5.svg')}}"
+        alt=""
+        style="
+          position: absolute;
+          top: -30px;
+          left: -60px;
+          z-index: 1;
+          margin: 0;
+        "
+      />
+
+      <h3 style="          
+      position: absolute;
+      top: 200px;
+      left: 750px;
+      z-index: 1;">
+        PHASE 1 LAWN 5
+      </h3>
+    </div>
+
+    <!-- Phase 2 Lawn 1-->
+    <div
+      class="d-flex flex-row"
+      style="
+        position: absolute;
+        top: 2930px;
+        left: 1541px;
+        width: 560px;
+        padding: 20px;
+        z-index: 100;
+      "
+    >
+      {% set lab = 'white' %} {% set lots_con = [] %} {% for id, lot_num, status
+      in p2l1_lots %} {% if id != None %} {% if status ==
+      STATUS.MONTHLY_AMORTIZATION %} {% set lab = LABEL.MONTHLY_AMORTIZATION %}
+      {% elif status == STATUS.SOLD_LOT_VACANT %} {% set lab =
+      LABEL.SOLD_LOT_VACANT %} {% elif status == STATUS.SOLD_LOT_OCCUPIED %} {%
+      set lab = LABEL.SOLD_LOT_OCCUPIED %} {% elif status ==
+      STATUS.SOLD_LOT_CONSUMED %} {% set lab = LABEL.SOLD_LOT_CONSUMED %} {%
+      elif status == STATUS.TRANSFERRED_LOT_VACANT %} {% set lab =
+      LABEL.TRANSFERRED_LOT_VACANT %} {% elif status ==
+      STATUS.TRANSFERRED_LOT_OCCUPIED %} {% set lab =
+      LABEL.TRANSFERRED_LOT_OCCUPIED %} {% elif status ==
+      STATUS.TRANSFERRED_LOT_CONSUMED %} {% set lab =
+      LABEL.TRANSFERRED_LOT_CONSUMED%} {% endif %} {% endif %} {% set
+      lot_num_str = lot_num | string() %} {% set id_str = id | string() %} {%
+      set lot = '
+      <div
+        class="card"
+        id="' + lot_num_str + '"
+        style="
+          width: 30px;
+          height: 20px;
+          font-size: 8px;
+          margin: 2px;
+          background-color: ' + lab + ';
+          z-index: 100;
+        "
+        data-bs-toggle="modal"
+        data-bs-target="#show-lot-info-' + id_str + '"
+      >
+        <div class="d-flex justify-content-center my-1">
+          ' + lot_num_str + '
+        </div>
+      </div>
+      '%} {{ lots_con.append(lot) or "" }} {% endfor %} {% set col = [ (1,50),
+      (51, 100), (101, 150), (151, 195), (196, 240), (241, 280), (281, 318),
+      (319, 354), (355, 388), (389, 416), (417, 444), (445, 472)] %} {% for
+      start, end in col %}
+
       <div>
         {% for lot_num in range(start, end + 1) %} {{lots_con[lot_num-1]|safe}}
         {% endfor %}
@@ -50,84 +247,164 @@
       {% endfor %}
 
       <img
-        src="{{url_for('static', filename='images/map/p1l1.svg')}}"
+        src="{{url_for('static', filename='images/map/p2l1.svg')}}"
         alt=""
         style="position: absolute; top: 0; left: 0; z-index: 1; margin: 0"
       />
+
+      
+      <h3 style="          
+      position: absolute;
+      bottom: 50px;
+      left: 200px;
+      z-index: 1;">
+        PHASE 2 LAWN 1
+      </h3>
     </div>
 
-    <img
-      src="{{url_for('static', filename='images/map/circle.svg')}}"
-      alt=""
-      style="width: 600px; top: 1320px; left: 350px; position: absolute"
-    />
-
-    <img
-      src="{{url_for('static', filename='images/map/circle_top.svg')}}"
-      alt=""
-      style="width: 520px; top: 0; left: 490px; position: absolute"
-    />
-
-    <!-- Phase 1 Lawn 2-->
+    <!-- Phase 2 Lawn 2-->
     <div
-    class="d-flex flex-column align-items-end"
-    style="position: absolute; top: 0; left: 840px; width: 2560px; padding: 50px; z-index: 100;"
-  >
-    {% set lab = 'white' %} {% set lots_con = [] %} {% for id, lot_num, status
-    in p1l2_lots %} {% if id != None %} {% if status ==
-    STATUS.MONTHLY_AMORTIZATION %} {% set lab = LABEL.MONTHLY_AMORTIZATION %}
-    {% elif status == STATUS.SOLD_LOT_VACANT %} {% set lab =
-    LABEL.SOLD_LOT_VACANT %} {% elif status == STATUS.SOLD_LOT_OCCUPIED %} {%
-    set lab = LABEL.SOLD_LOT_OCCUPIED %} {% elif status ==
-    STATUS.SOLD_LOT_CONSUMED %} {% set lab = LABEL.SOLD_LOT_CONSUMED %} {%
-    elif status == STATUS.TRANSFERRED_LOT_VACANT %} {% set lab =
-    LABEL.TRANSFERRED_LOT_VACANT %} {% elif status ==
-    STATUS.TRANSFERRED_LOT_OCCUPIED %} {% set lab =
-    LABEL.TRANSFERRED_LOT_OCCUPIED %} {% elif status ==
-    STATUS.TRANSFERRED_LOT_CONSUMED %} {% set lab =
-    LABEL.TRANSFERRED_LOT_CONSUMED%} {% endif %} {% endif %} {% set
-    lot_num_str = lot_num | string() %} {% set id_str = id | string() %} {%
-    set lot = '
-    <div
-      class="card"
-      id="' + lot_num_str + '"
+      class="d-flex flex-row"
       style="
-        width: 70px;
-        height: 50px;
-        margin: 2px;
-        background-color: ' + lab + ';
+        position: absolute;
+        top: 4090px;
+        left: 1541px;
+        width: 560px;
+        padding-top: 200px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
         z-index: 100;
       "
-      data-bs-toggle="modal"
-      data-bs-target="#show-lot-info-' + id_str + '"
     >
-      <div class="d-flex justify-content-center my-3">
-        ' + lot_num_str + '
+      {% set lab = 'white' %} {% set lots_con = [] %} {% for id, lot_num, status
+      in p2l2_lots %} {% if id != None %} {% if status ==
+      STATUS.MONTHLY_AMORTIZATION %} {% set lab = LABEL.MONTHLY_AMORTIZATION %}
+      {% elif status == STATUS.SOLD_LOT_VACANT %} {% set lab =
+      LABEL.SOLD_LOT_VACANT %} {% elif status == STATUS.SOLD_LOT_OCCUPIED %} {%
+      set lab = LABEL.SOLD_LOT_OCCUPIED %} {% elif status ==
+      STATUS.SOLD_LOT_CONSUMED %} {% set lab = LABEL.SOLD_LOT_CONSUMED %} {%
+      elif status == STATUS.TRANSFERRED_LOT_VACANT %} {% set lab =
+      LABEL.TRANSFERRED_LOT_VACANT %} {% elif status ==
+      STATUS.TRANSFERRED_LOT_OCCUPIED %} {% set lab =
+      LABEL.TRANSFERRED_LOT_OCCUPIED %} {% elif status ==
+      STATUS.TRANSFERRED_LOT_CONSUMED %} {% set lab =
+      LABEL.TRANSFERRED_LOT_CONSUMED%} {% endif %} {% endif %} {% set
+      lot_num_str = lot_num | string() %} {% set id_str = id | string() %} {%
+      set lot = '
+      <div
+        class="card"
+        id="' + lot_num_str + '"
+        style="
+          width: 30px;
+          height: 20px;
+          font-size: 8px;
+          margin: 2px;
+          background-color: ' + lab + ';
+          z-index: 100;
+        "
+        data-bs-toggle="modal"
+        data-bs-target="#show-lot-info-' + id_str + '"
+      >
+        <div class="d-flex justify-content-center my-1">
+          ' + lot_num_str + '
+        </div>
       </div>
-    </div>
-    '%} {{ lots_con.append(lot) or "" }} 
-    {% endfor %} {% set col = [(728, 753), (702, 727), (676, 701), (650, 675), (624, 649), (598, 623), (572, 597),
-                                (540, 571), (508, 539), (476, 507), (444, 475), (412, 443), (380, 411), (348, 379), (316, 347), (284, 315), (252, 283), (220, 251),
-                                  (188, 219), (156, 187), (125, 155), (94, 124), (63, 93), (32, 62), (1,31)] %} 
-    
-    {% for start, end in col %}
-      {% set mar = '74px'%}
-      {% if start < 220 %}
-         {% set mar = '0' %} 
-      {% endif %}
-    <div class="d-flex flex-row" style="margin-right: {{mar}};">
-      {% for lot_num in range(start, end + 1)|reverse %} {{lots_con[lot_num-1]|safe}}
+      '%} {{ lots_con.append(lot) or "" }} {% endfor %} {% set col = [ (1, 29),
+      (30, 58), (59, 87), (88, 110)] %} {% for start, end in col %} {% set mar =
+      '0' %} {% if end > 87 %} {% set mar = '66px' %} {% endif %}
+
+      <div style="margin-top: {{mar}};">
+        {% for lot_num in range(start, end + 1) %} {{lots_con[lot_num-1]|safe}}
+        {% endfor %}
+      </div>
       {% endfor %}
+
+      <img
+        src="{{url_for('static', filename='images/map/p2l2.svg')}}"
+        alt=""
+        style="position: absolute; top: 0; left: 0; z-index: 1; margin: 0"
+      />
+
+      <h3 style="          
+      position: absolute;
+      bottom: -70px;
+      left: 0;
+      z-index: 1;">
+        PHASE 2 LAWN 2
+      </h3>
     </div>
-    {% endfor %}
 
-    <img
-    src="{{url_for('static', filename='images/map/p1l2.svg')}}"
-    alt=""
-    style="position: absolute; top: 0; left: 0; z-index: 1; margin: 0"
-  />
-  </div>
+    <!-- Phase 2 Lawn 3-->
+    <div
+      class="d-flex flex-row"
+      style="
+        position: absolute;
+        top: 4090px;
+        left: 1030px;
+        width: 450px;
+        padding: 20px;
+        z-index: 100;
+      "
+    >
+      {% set lab = 'white' %} {% set lots_con = [] %} {% for id, lot_num, status
+      in p2l3_lots %} {% if id != None %} {% if status ==
+      STATUS.MONTHLY_AMORTIZATION %} {% set lab = LABEL.MONTHLY_AMORTIZATION %}
+      {% elif status == STATUS.SOLD_LOT_VACANT %} {% set lab =
+      LABEL.SOLD_LOT_VACANT %} {% elif status == STATUS.SOLD_LOT_OCCUPIED %} {%
+      set lab = LABEL.SOLD_LOT_OCCUPIED %} {% elif status ==
+      STATUS.SOLD_LOT_CONSUMED %} {% set lab = LABEL.SOLD_LOT_CONSUMED %} {%
+      elif status == STATUS.TRANSFERRED_LOT_VACANT %} {% set lab =
+      LABEL.TRANSFERRED_LOT_VACANT %} {% elif status ==
+      STATUS.TRANSFERRED_LOT_OCCUPIED %} {% set lab =
+      LABEL.TRANSFERRED_LOT_OCCUPIED %} {% elif status ==
+      STATUS.TRANSFERRED_LOT_CONSUMED %} {% set lab =
+      LABEL.TRANSFERRED_LOT_CONSUMED%} {% endif %} {% endif %} {% set
+      lot_num_str = lot_num | string() %} {% set id_str = id | string() %} {%
+      set lot = '
+      <div
+        class="card"
+        id="' + lot_num_str + '"
+        style="
+          width: 30px;
+          height: 20px;
+          font-size: 8px;
+          margin: 2px;
+          background-color: ' + lab + ';
+          z-index: 100;
+        "
+        data-bs-toggle="modal"
+        data-bs-target="#show-lot-info-' + id_str + '"
+      >
+        <div class="d-flex justify-content-center my-1">
+          ' + lot_num_str + '
+        </div>
+      </div>
+      '%} {{ lots_con.append(lot) or "" }} {% endfor %} {% set col = [ (371,
+      382), (334, 370), (297, 333), (260, 296), (223, 259), (186, 222), (149,
+      185), (112, 148), (75, 111), (38, 74), (1,37)] %} {% for start, end in col
+      %}
 
+      <div>
+        {% for lot_num in range(start, end + 1) %} {{lots_con[lot_num-1]|safe}}
+        {% endfor %}
+      </div>
+      {% endfor %}
+
+      <img
+        src="{{url_for('static', filename='images/map/p2l3.svg')}}"
+        alt=""
+        style="position: absolute; top: 0; left: 0; z-index: 1; margin: 0"
+      />
+
+      <h3 style="          
+      position: absolute;
+      bottom: -70px;
+      left: 0;
+      z-index: 1;">
+        PHASE 2 LAWN 3
+      </h3>
+    </div>
   </div>
   {% for all_all_lot in all_all_lots %}
   <!-- Modal -->

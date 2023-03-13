@@ -97,19 +97,23 @@ def map():
     label = CONSTANTS.LOT.LABEL
     status = CONSTANTS.LOT
 
-    p1l1_lots = get_all_lots(1,1)
-    p1l2_lots = get_all_lots(1,2)
     p1l3_lots = get_all_lots(1,3)
     p1l4_lots = get_all_lots(1,4)
     p1l5_lots = get_all_lots(1,5)
+    p2l1_lots = get_all_lots(2, 1)
+    p2l2_lots = get_all_lots(2, 2)
+    p2l3_lots = get_all_lots(2, 3)
 
 
     all_lots_occupied = Lot.query.all()
  
     
     return render_template('admin/map.html',
-                           p1l1_lots = p1l1_lots,
-                           p1l2_lots = p1l2_lots,
+                          p1l3_lots = p1l3_lots,
+                           p1l5_lots = p1l5_lots,
+                            p2l1_lots = p2l1_lots,
+                             p2l2_lots = p2l2_lots,
+                              p2l3_lots = p2l3_lots,
                            LABEL=label,
                            STATUS=status, 
                            all_all_lots=all_lots_occupied)

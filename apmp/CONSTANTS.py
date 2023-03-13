@@ -30,17 +30,17 @@ class LOT():
 
    class PHASE_1():
       NUM_OF_LAWNS = 5
-      LAWN_1_NUM_OF_LOTS = 179
-      LAWN_2_NUM_OF_LOTS = 782
-      LAWN_3_NUM_OF_LOTS = 400
-      LAWN_4_NUM_OF_LOTS = 631
-      LAWN_5_NUM_OF_LOTS = 400
+      LAWN_1_NUM_OF_LOTS = 179 # not included
+      LAWN_2_NUM_OF_LOTS = 782 # not included
+      LAWN_3_NUM_OF_LOTS = 758 
+      LAWN_4_NUM_OF_LOTS = 631 # not included
+      LAWN_5_NUM_OF_LOTS = 605
 
    class PHASE_2():
       NUM_OF_LAWNS = 3
-      LAWN_1_NUM_OF_LOTS = 250
-      LAWN_2_NUM_OF_LOTS = 100
-      LAWN_3_NUM_OF_LOTS = 500 
+      LAWN_1_NUM_OF_LOTS = 472
+      LAWN_2_NUM_OF_LOTS = 110
+      LAWN_3_NUM_OF_LOTS = 382
 
    PROMOS = [
       {  "TYPE": "STANDARD",

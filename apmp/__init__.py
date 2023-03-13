@@ -9,13 +9,11 @@ from flask_mail import Mail
 
 app = Flask(__name__)
 
-connection_uri = 'postgresql://postgres:password@localhost/apmp_db'
+#connection_uri = 'postgresql://postgres:password@localhost/apmp_db'
+#for external connection
+connection_uri = 'postgresql://apmp_db_test_user:A2KtDznZHpGFHiu57JmIH8O5SLPSkDpg@dpg-cftma4h4reb6ks0r32ng-a.singapore-postgres.render.com/apmp_db_test'
+
 # For internal connection in render.com
-# postgres://apmp_db_test_user:A2KtDznZHpGFHiu57JmIH8O5SLPSkDpg@dpg-cftma4h4reb6ks0r32ng-a/apmp_db_test
-
-# for external connection
-#postgresql://apmp_db_test_user:A2KtDznZHpGFHiu57JmIH8O5SLPSkDpg@dpg-cftma4h4reb6ks0r32ng-a.singapore-postgres.render.com/apmp_db_test
-
 #connection_uri = 'postgresql://apmp_db_test_user:A2KtDznZHpGFHiu57JmIH8O5SLPSkDpg@dpg-cftma4h4reb6ks0r32ng-a/apmp_db_test'
 app.config['SECRET_KEY'] = 'sdfsdfsdfsdfsdfsdfsdfsd' # This secret key should be random. Change this later.
 app.config['SQLALCHEMY_DATABASE_URI'] = connection_uri
