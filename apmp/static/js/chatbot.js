@@ -15,7 +15,8 @@
             initPayload: '/welcome_msg',
             customData: { language: "en" },
             //"https://rasa-minicknick.cloud.okteto.net/"
-            socketUrl: "http://localhost:8080",
+            //"http://localhost:8080"
+            socketUrl: "https://rasa-minicknick.cloud.okteto.net/",
           },
           null
         );
